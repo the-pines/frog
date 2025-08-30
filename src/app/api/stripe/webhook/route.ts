@@ -5,14 +5,11 @@ import { NextRequest } from 'next/server';
 
 import { db } from '@/db';
 import { cards, payments, users } from '@/db/schema';
-import {
-  stripe,
-  STRIPE_HEADERS,
-  STRIPE_WEBHOOK_SECRET_KEY,
-} from '@/config/stripe-config';
+import { stripe, STRIPE_HEADERS } from '@/config/stripe-config';
 import { LISK_USDC_ADDRESS } from '@/config/constants/addresses';
 import { gbpMinorToUsdcMinorToday } from '@/lib/gbpToUsd';
 import { executorAccount, publicClient } from '@/config/viem-config';
+import { BASE_URL, STRIPE_WEBHOOK_SECRET_KEY } from '@/config/constants/envs';
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -172,7 +169,7 @@ export async function POST(req: NextRequest) {
 
     if (paymentAuthRequest.approved) {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/execute-payment`;
+        const url = `${BASE_URL}/api/blockchain/execute-payment`;
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
