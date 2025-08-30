@@ -17,7 +17,7 @@ createAppKit({
     name: 'frog',
     description: 'jump jump jump',
     url: BASE_URL,
-    icons: ['https://avatars.githubusercontent.com/u/179229932'],
+    icons: ['https://github.com/the-pines/frog/blob/main/public/frog.png'],
   },
   features: {
     analytics: true,
