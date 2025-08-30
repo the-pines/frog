@@ -1,23 +1,23 @@
-import type { Metadata } from 'next';
+import { headers } from 'next/headers';
+import { Metadata } from 'next';
 import { Manrope, Bricolage_Grotesque, IBM_Plex_Mono } from 'next/font/google';
 
 import './globals.css';
+import WalletProvider from '@/contexts/WalletContext';
 
-const ui = Manrope({
+const texts = Manrope({
   subsets: ['latin'],
   variable: '--font-ui',
   display: 'swap',
   weight: 'variable',
 });
-
-const display = Bricolage_Grotesque({
+const headlines = Bricolage_Grotesque({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
   weight: 'variable',
 });
-
-const mono = IBM_Plex_Mono({
+const amounts = IBM_Plex_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
@@ -29,17 +29,22 @@ export const metadata: Metadata = {
   description: 'jump jump into your next life',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const headersObj = await headers();
+  const cookies = headersObj.get('cookie');
+
   return (
     <html lang="en">
       <body
-        className={`${ui.variable} ${display.variable} ${mono.variable} antialiased font-sans`}
+        className={`${texts.variable} ${headlines.variable} ${amounts.variable} antialiased font-sans`}
       >
-        <main className="relative max-w-[393px] min-h-[100vh] mx-auto border border-red-200">
-          {children}
-        </main>
+        <WalletProvider cookies={cookies}>
+          <main className="relative mx-auto max-w-[393px] min-h-dvh flex flex-col border border-red-200">
+            {children}
+          </main>
+        </WalletProvider>
       </body>
     </html>
   );
