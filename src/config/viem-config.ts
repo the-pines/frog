@@ -3,19 +3,17 @@
 // add idempotency and secure lock writes to the db
 
 import 'server-only';
-import { liskSepolia } from 'viem/chains';
+import { lisk } from 'viem/chains';
+import { EXECUTOR_PK, RPC_URL } from './constants/envs';
 import { privateKeyToAccount, nonceManager } from 'viem/accounts';
 import { http, createPublicClient, createWalletClient } from 'viem';
-
-const RPC_URL = process.env.RPC_URL || '';
-const EXECUTOR_PK = process.env.EXECUTOR_PK! as `0x${string}`;
 
 function makeClients() {
   const transport = http(RPC_URL);
   const executorAccount = privateKeyToAccount(EXECUTOR_PK, { nonceManager });
-  const publicClient = createPublicClient({ chain: liskSepolia, transport });
+  const publicClient = createPublicClient({ chain: lisk, transport });
   const walletClient = createWalletClient({
-    chain: liskSepolia,
+    chain: lisk,
     transport,
     account: executorAccount,
   });
