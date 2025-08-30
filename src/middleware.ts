@@ -1,4 +1,3 @@
-// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -97,7 +96,7 @@ async function isOnboarded(
   };
 
   // a) user lookup
-  const userRes = await fetch(new URL('/api/get-user', base), {
+  const userRes = await fetch(new URL('/api/db/get-user', base), {
     method: 'POST',
     headers,
     body: JSON.stringify({ address }),
@@ -107,7 +106,7 @@ async function isOnboarded(
   if (!user?.id) return false;
 
   // b) card lookup
-  const cardRes = await fetch(new URL('/api/get-card', base), {
+  const cardRes = await fetch(new URL('/api/db/get-card', base), {
     method: 'POST',
     headers,
     body: JSON.stringify({ userId: user.id }),
