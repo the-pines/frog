@@ -29,8 +29,8 @@ export default function Navigation() {
       aria-label="Bottom navigation"
       className="fixed inset-x-0 bottom-0 z-50"
     >
-      <div className="mx-auto w-full max-w-[393px]">
-        <div className="border border-red-200 bg-black/70 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+      <div className="mx-auto w-full max-w-[340px]">
+        <div className="border border-red-200 rounded-3xl mb-3 bg-black/70 backdrop-blur supports-[backdrop-filter]:bg-black/60">
           <ul className="grid grid-cols-3 h-[56px]">
             {navItems.map(({ href, label, Icon }) => {
               const isActive = pathname === href;

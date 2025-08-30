@@ -20,7 +20,7 @@ createAppKit({
     icons: ['https://github.com/the-pines/frog/blob/main/public/frog.png'],
   },
   features: {
-    analytics: true,
+    analytics: false,
   },
 });
 

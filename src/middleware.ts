@@ -136,59 +136,59 @@ function setOnboardingCookies(res: NextResponse, address: string) {
 }
 
 export async function middleware(req: NextRequest) {
-  const { pathname, search } = req.nextUrl;
-  if (isAssetPath(pathname)) return NextResponse.next();
+  // const { pathname, search } = req.nextUrl;
+  // if (isAssetPath(pathname)) return NextResponse.next();
 
-  const address = getAddressFromWagmiCookie(
-    req.cookies.get(WAGMI_COOKIE_KEY)?.value
-  );
-  const isConnected = !!address;
+  // const address = getAddressFromWagmiCookie(
+  //   req.cookies.get(WAGMI_COOKIE_KEY)?.value
+  // );
+  // const isConnected = !!address;
 
-  // --- protected routes ---
-  if (isProtectedRoute(pathname)) {
-    if (!isConnected) {
-      return redirectWithNext(req, '/login', pathname + search);
-    }
+  // // --- protected routes ---
+  // if (isProtectedRoute(pathname)) {
+  //   if (!isConnected) {
+  //     return redirectWithNext(req, '/login', pathname + search);
+  //   }
 
-    // fast-path
-    if (hasOnboardedCookie(req, address)) {
-      return NextResponse.next();
-    }
+  //   // fast-path
+  //   if (hasOnboardedCookie(req, address)) {
+  //     return NextResponse.next();
+  //   }
 
-    // slow-path
-    const onboarded = await isOnboarded(req, address!);
-    if (!onboarded) {
-      return redirectWithNext(req, '/signup', pathname + search);
-    }
+  //   // slow-path
+  //   const onboarded = await isOnboarded(req, address!);
+  //   if (!onboarded) {
+  //     return redirectWithNext(req, '/signup', pathname + search);
+  //   }
 
-    const res = NextResponse.next();
-    setOnboardingCookies(res, address);
-    return res;
-  }
+  //   const res = NextResponse.next();
+  //   setOnboardingCookies(res, address);
+  //   return res;
+  // }
 
-  // fast-path
-  if (isAuthRoute(pathname)) {
-    if (!isConnected) return NextResponse.next();
+  // // fast-path
+  // if (isAuthRoute(pathname)) {
+  //   if (!isConnected) return NextResponse.next();
 
-    // FAST PATH
-    if (hasOnboardedCookie(req, address)) {
-      return redirectWithNext(req, '/', pathname + search);
-    }
+  //   // FAST PATH
+  //   if (hasOnboardedCookie(req, address)) {
+  //     return redirectWithNext(req, '/', pathname + search);
+  //   }
 
-    // slow-path
-    const onboarded = await isOnboarded(req, address!);
-    if (onboarded) {
-      const res = redirectWithNext(req, '/', pathname + search);
-      setOnboardingCookies(res, address);
-      return res;
-    }
+  //   // slow-path
+  //   const onboarded = await isOnboarded(req, address!);
+  //   if (onboarded) {
+  //     const res = redirectWithNext(req, '/', pathname + search);
+  //     setOnboardingCookies(res, address);
+  //     return res;
+  //   }
 
-    // connected but not onboarded
-    if (pathname === '/login' || pathname.startsWith('/login/')) {
-      return redirectWithNext(req, '/signup');
-    }
-    return NextResponse.next();
-  }
+  //   // connected but not onboarded
+  //   if (pathname === '/login' || pathname.startsWith('/login/')) {
+  //     return redirectWithNext(req, '/signup');
+  //   }
+  //   return NextResponse.next();
+  // }
 
   return NextResponse.next();
 }

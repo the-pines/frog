@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto w-full max-w-[393px]">
-        <div className="border border-red-200 flex items-center justify-between">
+        <div className="border border-red-200 px-4 py-2 flex items-center justify-between">
           <Link href="/" aria-label="Home" className="rounded-xl">
             <Image
               src="/frog.png"

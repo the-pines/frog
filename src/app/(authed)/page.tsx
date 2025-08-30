@@ -1,1 +1,5 @@
-export default function Home() {}
+import HomePage from '@/components/features/authed/home/HomePage';
+
+export default function Home() {
+  return <HomePage />;
+}
