@@ -11,10 +11,10 @@ const HomePage: React.FC = () => {
   const userAddress = address as `0x${string}`;
   const { data, loading, error } = useGetUserDetails(userAddress);
 
-  const cardholderName = data?.user.card.displayName ?? '';
-  const cardNumber = data?.user.card.number ?? '';
-  const expiry = data?.user.card.expiry ?? '';
-  const cvc = data?.user.card.cvc ?? '';
+  const cardholderName = data?.user?.card?.displayName ?? '';
+  const cardNumber = data?.user?.card?.number ?? '';
+  const expiry = data?.user?.card?.expiry ?? '';
+  const cvc = data?.user?.card?.cvc ?? '';
 
   return (
     <div className="flex flex-col gap-4 h-full">
