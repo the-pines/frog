@@ -5,7 +5,9 @@ export const TREASURY_ADDRESS = '' as `0x${string}`;
 export const BASE_USDC_ADDRESS = '' as `0x${string}`;
 export const LISK_USDC_ADDRESS = '0xF242275d3a6527d877f2c927a82D9b057609cc71' as `0x${string}`;
 export const LISK_ETH_RESTAKE_FACTORY_ADDRESS = '0xE805bB943E0171670C2D61C93a8Bed8C459F2f7c' as `0x${string}`; // LiskETHRestakeVaultFactory
-export const ROUTER_ADDRESS = '0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE' as `0x${string}`; // e.g., LI.FI Router on Lisk
+export const ROUTER_ADDRESS = '0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE' as `0x${string}`; // lifi router on lisk
+export const POINTS_TOKEN_ADDRESS = '0xa886e30c7e759f3E39cE2cdcDFC0341E6b65f0bc' as `0x${string}`;
+export const ADMIN_LEADERBOARD_ADDRESS = '0xD9FdCaE3E93f9b2DAcc543262Cf4f98A2F615cdD' as `0x${string}`;
 
 // Hidden vault addresses 
 export const HIDDEN_VAULT_ADDRESSES: ReadonlyArray<`0x${string}`> = [

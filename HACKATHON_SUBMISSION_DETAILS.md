@@ -37,3 +37,7 @@ To dive even deeper, there is an estimated 400k adults in LATAM who do not have 
 Frog Pay is a solution for this, allowing users to pay with their crypto anywhere while still having full control of their assets. There are also savings features, so users to safely stake their assets - stables and native coins - and earn more money in a self-custodial way.
 
 Our goal is to replace banks entirely. LATAM already has the onramping infrastructure so let's make payments easier. We believe we can bank the unbanked in a way that is actually useful, and better-bank the banked.
+
+## V0 by Vercel
+
+We're huge fans of Vercel and weren't going to use anything else! We used V0 to design the frontend components (although we wrote the logic ourselves). We're particularly happy with how the debit card component turned out. We also deployed both the Frog Pay and Zarpado Shop apps to our domain using Vercel.

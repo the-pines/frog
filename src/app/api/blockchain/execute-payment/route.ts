@@ -15,6 +15,16 @@ import {
   LISK_USDC_ADDRESS,
 } from '@/config/constants/addresses';
 import { gbpMinorToUsdcMinorToday } from '@/lib/gbpToUsd';
+import pointsAbiJson from '@/lib/contracts/PointsToken.sol/PointsToken.json';
+import adminAbiJson from '@/lib/contracts/AdminMinterLeaderboard.sol/AdminMinterLeaderboard.json';
+import {
+  POINTS_TOKEN_ADDRESS as ENV_POINTS,
+  ADMIN_LEADERBOARD_ADDRESS as ENV_ADMIN,
+} from '@/config/constants/envs';
+import {
+  POINTS_TOKEN_ADDRESS as CONST_POINTS,
+  ADMIN_LEADERBOARD_ADDRESS as CONST_ADMIN,
+} from '@/config/constants/addresses';
 
 const BodySchema = z.object({
   paymentId: z.uuid(),
@@ -120,6 +130,34 @@ export async function POST(req: NextRequest) {
       receiver: TREASURY_ADDRESS,
       txHash,
     });
+
+    try {
+      const pointsAddress = (ENV_POINTS || CONST_POINTS) as `0x${string}`;
+      const adminAddress = (ENV_ADMIN || CONST_ADMIN) as `0x${string}`;
+      if (pointsAddress && adminAddress) {
+        const pointsAbi = (pointsAbiJson as { abi: unknown })
+          .abi as readonly unknown[];
+        const adminAbi = (adminAbiJson as { abi: unknown })
+          .abi as readonly unknown[];
+        // usdcMinor has 6 decimals; pointsDecimals may vary
+        const pointsDecimals = (await publicClient.readContract({
+          address: pointsAddress,
+          abi: pointsAbi,
+          functionName: 'decimals',
+        })) as number;
+        const scale = BigInt(10) ** BigInt(Math.max(0, pointsDecimals - 6));
+        const POINTS_PER_USD = BigInt(100);
+        const amount = BigInt(usdcMinor) * scale * POINTS_PER_USD;
+        const awardTx = await walletClient.writeContract({
+          account: executorAccount,
+          address: adminAddress,
+          abi: adminAbi,
+          functionName: 'award',
+          args: [userAddress, amount],
+        });
+        await publicClient.waitForTransactionReceipt({ hash: awardTx });
+      }
+    } catch {}
 
     return NextResponse.json({ ok: true, txHash }, { status: 200 });
   } catch (e) {
