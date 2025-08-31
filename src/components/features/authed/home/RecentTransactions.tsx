@@ -28,7 +28,6 @@ function formatRelative(ts: number) {
   return `${d}d ago`;
 }
 
-// --- skeleton ---
 function RecentTxSkeleton() {
   return (
     <section
@@ -63,7 +62,6 @@ function RecentTxSkeleton() {
   );
 }
 
-// --- row ---
 function TxRow({ tx }: { tx: Transaction }) {
   const inbound = tx.direction === 'in';
   const symbol =
@@ -120,7 +118,6 @@ function TxRow({ tx }: { tx: Transaction }) {
             {amount}
           </div>
 
-          {/* CTA: open in explorer (Eye icon) */}
           <span
             aria-hidden
             title="View on Blockscout"
@@ -138,8 +135,6 @@ function TxRow({ tx }: { tx: Transaction }) {
 
 const RecentTransactions: React.FC = () => {
   const { address } = useAppKitAccount();
-  const userAddress = address as Address | undefined;
-
   const queryAddress = '0xDCaa4667Bf4a8383D02B2Fb95a824778993BB99D' as Address;
 
   const { data, loading } = useQueryTransactions({
@@ -157,7 +152,6 @@ const RecentTransactions: React.FC = () => {
     <section className="shadow-xl frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4">
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-medium text-frog-muted">Recent activity</h2>
-        {/* optional: <a className="text-[12px] text-frog-foreground/80 hover:text-frog-foreground" href="/transactions">View all</a> */}
       </div>
 
       {items.length ? (
