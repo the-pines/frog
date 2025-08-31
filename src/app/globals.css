@@ -29,3 +29,44 @@ body {
   color: var(--color-foreground);
   background: var(--color-background);
 }
+
+/* Keyframes for subtle UI motion */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes confetti-pop {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.9) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(1) rotate(250deg);
+  }
+}
+
+/* Reliable spinner animation */
+@keyframes ai-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner-svg {
+  animation: ai-spin 1s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
