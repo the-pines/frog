@@ -25,8 +25,8 @@ const amounts = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'f r o g',
-  description: 'jump jump into your next life',
+  title: 'Frog',
+  description: 'jump and ribbit into freedom',
 };
 
 export default async function RootLayout({

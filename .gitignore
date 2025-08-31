@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/tmp
+/delete-me
 
 # next.js
 /.next/

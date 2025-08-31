@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { UserIcon } from '@heroicons/react/24/outline';
-// import { PointsBadge } from '@/components/feature';
+import PointsBadge from '@/components/ui/PointsBadge';
 
 export default function Header() {
   return (

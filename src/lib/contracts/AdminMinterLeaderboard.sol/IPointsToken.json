@@ -1,0 +1,85 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "balanceOf",
+      "inputs": [
+        { "name": "who", "type": "address", "internalType": "address" }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "mint",
+      "inputs": [
+        { "name": "to", "type": "address", "internalType": "address" },
+        { "name": "amount", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    }
+  ],
+  "bytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "deployedBytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "methodIdentifiers": {
+    "balanceOf(address)": "70a08231",
+    "mint(address,uint256)": "40c10f19"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/points/AdminMinterLeaderboard.sol\":\"IPointsToken\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":openzeppelin/=node_modules/openzeppelin/\"]},\"sources\":{\"contracts/points/AdminMinterLeaderboard.sol\":{\"keccak256\":\"0x48b29e6ee90ffdd8e7e40d0a915608c53692403e68a824a666ec60bb7c5f8b7f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f8de17e7ab9d93c2443bfefedd4339bd8bfe4bd9e40e2ec386e2825358134ae6\",\"dweb:/ipfs/Qmcb2HCgCXAKWg3YH6jJ71YnCECjXZtyiiVzFwUH1EJkLZ\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": { "version": "0.8.28+commit.7893614a" },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            { "internalType": "address", "name": "who", "type": "address" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "balanceOf",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "to", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "mint"
+        }
+      ],
+      "devdoc": { "kind": "dev", "methods": {}, "version": 1 },
+      "userdoc": { "kind": "user", "methods": {}, "version": 1 }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
+        "openzeppelin/=node_modules/openzeppelin/"
+      ],
+      "optimizer": { "enabled": true, "runs": 200 },
+      "metadata": { "bytecodeHash": "ipfs" },
+      "compilationTarget": {
+        "contracts/points/AdminMinterLeaderboard.sol": "IPointsToken"
+      },
+      "evmVersion": "paris",
+      "libraries": {}
+    },
+    "sources": {
+      "contracts/points/AdminMinterLeaderboard.sol": {
+        "keccak256": "0x48b29e6ee90ffdd8e7e40d0a915608c53692403e68a824a666ec60bb7c5f8b7f",
+        "urls": [
+          "bzz-raw://f8de17e7ab9d93c2443bfefedd4339bd8bfe4bd9e40e2ec386e2825358134ae6",
+          "dweb:/ipfs/Qmcb2HCgCXAKWg3YH6jJ71YnCECjXZtyiiVzFwUH1EJkLZ"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 0
+}
