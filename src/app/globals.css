@@ -1,13 +1,31 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #67de8f;
-  --foreground: #083b29;
+  --frog: oklch(0.72 0.15 150);
+  --frog-active: oklch(0.82 0.18 145);
+  --frog-foreground: oklch(0.97 0.01 160);
+  --frog-muted: oklch(0.83 0.01 160);
+  --frog-bg: oklch(0.14 0.02 160);
+  --frog-glass: oklch(0.22 0.03 160);
+
+  --grad-1: oklch(0.76 0.16 145);
+  --grad-2: oklch(0.66 0.12 160);
+  --grad-3: oklch(0.62 0.09 200);
+
+  --accent-strength: 1.5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
+  --color-frog: var(--frog);
+  --color-frog-active: var(--frog-active);
+  --color-frog-foreground: var(--frog-foreground);
+  --color-frog-muted: var(--frog-muted);
+  --color-frog-bg: var(--frog-bg);
+  --color-frog-glass: var(--frog-glass);
+
+  --color-grad-1: var(--grad-1);
+  --color-grad-2: var(--grad-2);
+  --color-grad-3: var(--grad-3);
 
   /* font for texts */
   --font-sans: var(--font-ui), system-ui, -apple-system, Segoe UI, Roboto,
@@ -20,12 +38,205 @@
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-html,
-body {
-  height: 100%;
+@keyframes pond-move {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
-body {
-  color: var(--color-foreground);
-  background: var(--color-background);
+.bg-pond-neon {
+  background: radial-gradient(
+      120% 120% at 10% 0%,
+      var(--color-grad-1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      120% 120% at 100% 20%,
+      var(--color-grad-2) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      140% 140% at 40% 100%,
+      var(--color-grad-3) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      120deg,
+      var(--color-grad-1),
+      var(--color-grad-2),
+      var(--color-grad-3)
+    );
+  background-size: 200% 200%;
+  animation: pond-move 26s ease-in-out infinite;
+}
+
+.bg-pond-moss {
+  background: radial-gradient(
+      120% 120% at 0% 10%,
+      oklch(0.58 0.09 160) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      120% 120% at 100% 90%,
+      oklch(0.52 0.07 180) 0%,
+      transparent 62%
+    ),
+    linear-gradient(110deg, oklch(0.62 0.1 170), oklch(0.48 0.06 190));
+  background-size: 200% 200%;
+  animation: pond-move 28s ease-in-out infinite;
+}
+
+.frog-glass {
+  background-color: color-mix(
+    in oklab,
+    var(--color-frog-glass) 78%,
+    transparent
+  );
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(
+    in oklab,
+    var(--color-frog-foreground) 10%,
+    transparent
+  );
+  border-radius: 0.75rem;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, white 12%, transparent) 50%,
+    transparent
+  );
+  animation: frog-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes frog-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.shimmer-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -50%;
+  width: 50%;
+  transform: rotate(12deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.32),
+    transparent
+  );
+  filter: blur(6px);
+  transition: transform 0.75s ease-out, left 0.75s ease-out;
+}
+.shimmer-sweep.is-active::after {
+  left: 120%;
+}
+
+@keyframes aurora-drift {
+  0% {
+    background-position: 0% 0%, 100% 0%, 0% 100%, 50% 50%;
+  }
+  50% {
+    background-position: 100% 100%, 0% 50%, 60% 0%, 0% 100%;
+  }
+  100% {
+    background-position: 200% 200%, -100% 100%, 120% -100%, -50% 150%;
+  }
+}
+
+.aurora {
+  background-size: 200% 200%, 200% 200%, 200% 200%, 200% 200%;
+  background-repeat: no-repeat; /* harmless with gradients */
+  animation: aurora-drift 10s ease-in-out infinite alternate;
+  will-change: background-position;
+}
+
+.card-aurora-cobalt {
+  --cobalt: oklch(0.48 0.12 255);
+  --indigo: oklch(0.42 0.09 285);
+  --teal: oklch(0.62 0.1 205);
+  --green: oklch(0.72 calc(0.14 * var(--accent-strength)) 150);
+
+  background-image: radial-gradient(
+      120% 120% at 16% 10%,
+      var(--green) 0%,
+      transparent 52%
+    ),
+    conic-gradient(
+      from 210deg at 70% 28%,
+      var(--teal) 0%,
+      var(--cobalt) 35%,
+      var(--indigo) 65%,
+      var(--cobalt) 100%
+    ),
+    radial-gradient(
+      140% 100% at 85% 25%,
+      color-mix(in oklab, var(--cobalt) 60%, var(--teal)) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--cobalt) 70%, var(--teal)),
+      var(--cobalt)
+    );
+  background-size: 220% 220%, 180% 180%, 200% 200%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, 0% 100%, 50% 50%;
+}
+
+@property --wand-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+@property --wand-y {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+.aurora::before {
+  content: '';
+  position: absolute;
+  width: 22%; /* hotspot size; tweak 16%–26% */
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.7) 20%,
+    rgba(180, 255, 235, 0.35) 12%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  filter: blur(1.5px) saturate(1.2);
+  mix-blend-mode: screen;
+  transform: translate(var(--wand-x), var(--wand-y)) translate(-50%, -50%);
+  opacity: 0.85;
+  animation: wand-path var(--aurora-duration) var(--aurora-easing) infinite
+    alternate;
 }
