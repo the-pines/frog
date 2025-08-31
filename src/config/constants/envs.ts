@@ -1,6 +1,7 @@
 /** PUBLIC **/
-export const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL;
+export const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || '';
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
+export const BLOCKSCOUT_URL = process.env.NEXT_PUBLIC_BLOCKSCOUT_URL || '';
 export const REOWN_PROJECT_ID = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || '';
 
 /** SECRET **/

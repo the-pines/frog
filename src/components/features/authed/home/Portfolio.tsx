@@ -18,9 +18,6 @@ const Portfolio: React.FC = () => {
       token: { address: LISK_USDC_ADDRESS },
     });
 
-  console.log(nativeBalance?.formatted);
-  console.log(usdcBalance?.formatted);
-
   const balancesLoading = useMemo(() => {
     if (!nativeBalanceLoading && !usdcBalanceLoading) {
       return false;

@@ -25,7 +25,7 @@ const amounts = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Frog',
+  title: 'f r o g',
   description: 'jump jump into your next life',
 };
 
