@@ -58,7 +58,7 @@ export default function Card({
     <div className={clsx('inline-flex flex-col items-center', className)}>
       <div
         className={clsx(
-          'group relative w-[393px] aspect-[1.6/1] cursor-pointer select-none',
+          'group relative w-[363px] aspect-[1.6/1] cursor-pointer select-none',
           'transition will-change-transform hover:[transform:translateY(-1px)] active:[transform:translateY(0)]'
         )}
         role="button"

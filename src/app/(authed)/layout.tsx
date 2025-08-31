@@ -12,7 +12,7 @@ export default function AuthedLayout({
     <>
       <Header />
 
-      <main className="py-[85px]">
+      <main className="py-[85px] px-[15px]">
         <AuthProvider>
           <PageTransition>{children}</PageTransition>
         </AuthProvider>
