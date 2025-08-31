@@ -1,7 +1,7 @@
 import { Address } from "viem";
 
 /** WALLET ADDRESSES **/
-export const TREASURY_ADDRESS = '' as Address;
+export const TREASURY_ADDRESS = '0x6CB7f088fc3D07E145dC0418F12F74268D0D0309' as Address;
 
 /** TOKEN ADDRESSES **/
 export const BASE_USDC_ADDRESS = '' as Address;

@@ -9,7 +9,7 @@
     "lint": "eslint",
     "drizzle:gen": "drizzle-kit generate --config=drizzle.config.ts",
     "drizzle:push": "drizzle-kit push --config=drizzle.config.ts",
-    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhook-stripe"
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
