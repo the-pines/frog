@@ -25,29 +25,29 @@ export default function CreateMockUserButton({
     // --- Mock data (UK / GB)
     const body = {
       user: {
-        name: 'Chad Frog',
+        name: 'Cat McGee',
         address: address,
         provider: 'wallet' as const,
       },
       cardholder: {
-        name: 'test test',
+        name: 'Cat McGee',
         individual: {
-          first_name: 'Chaddy',
-          last_name: 'Froggy',
+          first_name: 'Cat',
+          last_name: 'McGee',
           dob: { day: 20, month: 4, year: 1996 },
         },
         billing: {
           address: {
-            line1: '221B Baker Street',
+            line1: '221B Chord Street',
             line2: undefined,
             city: 'London',
             state: 'Greater London',
-            postal_code: 'NW1 6XE',
+            postal_code: 'NW2 6XE',
             country: 'GB' as const,
           },
         },
         email: undefined,
-        phone_number: '+44 20 7946 0958',
+        phone_number: '+44 20 7944 0958',
         // metadata: { test: 1 }, // optional
       },
     };
