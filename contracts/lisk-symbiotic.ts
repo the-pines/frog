@@ -15,7 +15,7 @@ import type { Abi } from 'viem';
 import VaultArtifact from '../src/lib/contracts/SymbioticLiskEthVaultProxy.sol/SymbioticLiskETHVaultProxy.json';
 
 const {
-  PRIVATE_KEY,
+  EXECUTOR_PRIVATE_KEY,
   LISK_RPC_URL = 'https://rpc.api.lisk.com',
   LIFI_API_KEY,
   VAULT_ADDRESS,
@@ -26,8 +26,10 @@ const {
   WITHDRAW_FRACTION_BPS = '5000',
 } = process.env as Record<string, string>;
 
-if (!PRIVATE_KEY || !LIFI_API_KEY || !VAULT_ADDRESS) {
-  throw new Error('Missing env: PRIVATE_KEY, LIFI_API_KEY, VAULT_ADDRESS');
+if (!EXECUTOR_PRIVATE_KEY || !LIFI_API_KEY || !VAULT_ADDRESS) {
+  throw new Error(
+    'Missing env: EXECUTOR_PRIVATE_KEY, LIFI_API_KEY, VAULT_ADDRESS'
+  );
 }
 
 const lisk = defineChain({
@@ -52,7 +54,7 @@ const ERC4626_ABI = [
   },
 ] as const;
 
-const account = privateKeyToAccount(PRIVATE_KEY as `0x${string}`);
+const account = privateKeyToAccount(EXECUTOR_PRIVATE_KEY as `0x${string}`);
 const pub = createPublicClient({ chain: lisk, transport: http(LISK_RPC_URL) });
 const wallet = createWalletClient({
   account,

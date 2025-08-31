@@ -135,10 +135,10 @@ function TxRow({ tx }: { tx: Transaction }) {
 
 const RecentTransactions: React.FC = () => {
   const { address } = useAppKitAccount();
-  const queryAddress = '0xDCaa4667Bf4a8383D02B2Fb95a824778993BB99D' as Address;
+  const userAddress = '0xDCaa4667Bf4a8383D02B2Fb95a824778993BB99D' as Address;
 
   const { data, loading } = useQueryTransactions({
-    address: queryAddress,
+    address: userAddress,
     all: true,
     limit: 3,
     offset: 0,

@@ -6,6 +6,7 @@ import { LISK_USDC_ADDRESS } from '@/config/constants/addresses';
 import { useQueryNativeBalance } from '@/hooks/useQueryNativeBalance';
 import { useQueryTokenBalance } from '@/hooks/useQueryTokenBalance';
 import { CubeIcon, BanknotesIcon } from '@heroicons/react/24/outline';
+import { Address } from 'viem';
 
 type RowProps = {
   icon: React.ReactNode;
@@ -70,13 +71,13 @@ const PortfolioSkeleton: React.FC = () => (
 
 const Portfolio: React.FC = () => {
   const { address } = useAppKitAccount();
-  const userAddress = '0xdcaa4667bf4a8383d02b2fb95a824778993bb99d';
+  const userAddress = '0xdcaa4667bf4a8383d02b2fb95a824778993bb99d' as Address;
 
   const { data: nativeBalance, loading: nativeBalanceLoading } =
     useQueryNativeBalance(userAddress);
   const { data: usdcBalance, loading: usdcBalanceLoading } =
     useQueryTokenBalance({
-      owner: userAddress as `0x${string}`,
+      owner: userAddress,
       token: { address: LISK_USDC_ADDRESS },
     });
 

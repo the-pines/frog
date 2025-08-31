@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { db } from '@/db';
 import { users, cards, payments, executions, transfers } from '@/db/schema';
+import { gbpMinorToUsdcMinorToday } from '@/lib/gbpToUsd';
 import {
   executorAccount,
   publicClient,
@@ -13,18 +14,13 @@ import {
 import {
   TREASURY_ADDRESS,
   LISK_USDC_ADDRESS,
+  POINTS_TOKEN_ADDRESS,
+  ADMIN_LEADERBOARD_ADDRESS,
 } from '@/config/constants/addresses';
-import { gbpMinorToUsdcMinorToday } from '@/lib/gbpToUsd';
-import pointsAbiJson from '@/lib/contracts/PointsToken.sol/PointsToken.json';
-import adminAbiJson from '@/lib/contracts/AdminMinterLeaderboard.sol/AdminMinterLeaderboard.json';
 import {
-  POINTS_TOKEN_ADDRESS as ENV_POINTS,
-  ADMIN_LEADERBOARD_ADDRESS as ENV_ADMIN,
-} from '@/config/constants/envs';
-import {
-  POINTS_TOKEN_ADDRESS as CONST_POINTS,
-  ADMIN_LEADERBOARD_ADDRESS as CONST_ADMIN,
-} from '@/config/constants/addresses';
+  ADMIN_LEADERBOARD_ABI,
+  POINTS_TOKEN_ABI,
+} from '@/config/constants/abis';
 
 const BodySchema = z.object({
   paymentId: z.uuid(),
@@ -132,32 +128,28 @@ export async function POST(req: NextRequest) {
     });
 
     try {
-      const pointsAddress = (ENV_POINTS || CONST_POINTS) as `0x${string}`;
-      const adminAddress = (ENV_ADMIN || CONST_ADMIN) as `0x${string}`;
-      if (pointsAddress && adminAddress) {
-        const pointsAbi = (pointsAbiJson as { abi: unknown })
-          .abi as readonly unknown[];
-        const adminAbi = (adminAbiJson as { abi: unknown })
-          .abi as readonly unknown[];
-        // usdcMinor has 6 decimals; pointsDecimals may vary
-        const pointsDecimals = (await publicClient.readContract({
-          address: pointsAddress,
-          abi: pointsAbi,
-          functionName: 'decimals',
-        })) as number;
-        const scale = BigInt(10) ** BigInt(Math.max(0, pointsDecimals - 6));
-        const POINTS_PER_USD = BigInt(100);
-        const amount = BigInt(usdcMinor) * scale * POINTS_PER_USD;
-        const awardTx = await walletClient.writeContract({
-          account: executorAccount,
-          address: adminAddress,
-          abi: adminAbi,
-          functionName: 'award',
-          args: [userAddress, amount],
-        });
-        await publicClient.waitForTransactionReceipt({ hash: awardTx });
-      }
-    } catch {}
+      const pointsDecimals = await publicClient.readContract({
+        address: POINTS_TOKEN_ADDRESS,
+        abi: POINTS_TOKEN_ABI,
+        functionName: 'decimals',
+      });
+
+      const scale =
+        BigInt(10) ** BigInt(Math.max(0, Number(pointsDecimals) - 6));
+      const POINTS_PER_USD = BigInt(100);
+      const amount = BigInt(usdcMinor) * scale * POINTS_PER_USD;
+
+      const awardTx = await walletClient.writeContract({
+        account: executorAccount,
+        address: ADMIN_LEADERBOARD_ADDRESS,
+        abi: ADMIN_LEADERBOARD_ABI,
+        functionName: 'award',
+        args: [userAddress, amount],
+      });
+      await publicClient.waitForTransactionReceipt({ hash: awardTx });
+    } catch (e) {
+      console.error('[execute-payment] award 1000 points failed:', e);
+    }
 
     return NextResponse.json({ ok: true, txHash }, { status: 200 });
   } catch (e) {

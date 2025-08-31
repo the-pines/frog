@@ -20,6 +20,7 @@ import { lisk } from 'viem/chains';
 import { RPC_URL, BLOCKSCOUT_URL } from '@/config/constants/envs';
 import { LISK_USDC_ADDRESS } from '@/config/constants/addresses';
 import Spinner from '@/components/ui/Spinner';
+import SuperButton from '@/components/ui/SuperButton';
 
 type ApprovalRow = {
   token: Address;
@@ -334,6 +335,8 @@ export default function Settings() {
           Tip: Revoking approvals may stop this app from working correctly
         </div>
       </div>
+
+      {/* <SuperButton /> */}
     </div>
   );
 }

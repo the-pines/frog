@@ -1,23 +1,28 @@
+'use client';
+
 import Card from './Card';
 import Portfolio from './Portfolio';
 import RecentTransactions from './RecentTransactions';
+import { useAppKitAccount } from '@reown/appkit/react';
+import { useGetUserDetails } from '@/hooks/useGetUserDetails';
 
 const HomePage: React.FC = () => {
-  const exampleCard = {
-    cardholderName: 'Frog User',
-    cardNumber: '4242 4242 4242 4242', // Visa test number
-    expiry: '12/29',
-    cvc: '123',
-    // masked: true, // optional (default true). Set to false to show full number on front.
-  };
+  const { address } = useAppKitAccount();
+  const userAddress = address as `0x${string}`;
+  const { data, loading, error } = useGetUserDetails(userAddress);
+
+  const cardholderName = data?.user.card.displayName ?? '';
+  const cardNumber = data?.user.card.number ?? '';
+  const expiry = data?.user.card.expiry ?? '';
+  const cvc = data?.user.card.cvc ?? '';
 
   return (
     <div className="flex flex-col gap-4 h-full">
       <Card
-        cardholderName={exampleCard.cardholderName}
-        cardNumber={exampleCard.cardNumber}
-        expiry={exampleCard.expiry}
-        cvc={exampleCard.cvc}
+        cardholderName={cardholderName}
+        cardNumber={cardNumber}
+        expiry={expiry}
+        cvc={cvc}
         className="mx-auto mb-6"
       />
 

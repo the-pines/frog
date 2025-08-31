@@ -42,7 +42,7 @@ export default async function RootLayout({
       >
         <WalletProvider cookies={cookies}>
           <div className="relative min-h-svh bg-pond-moss bg-fixed">
-            <main className="relative z-10 mx-auto max-w-[393px] min-h-svh text-frog-foreground">
+            <main className="relative z-0 mx-auto max-w-[393px] min-h-svh text-frog-foreground">
               {children}
             </main>
           </div>
