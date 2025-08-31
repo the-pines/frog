@@ -4,17 +4,15 @@ With Frog Pay, users can pay with _anything_, _anywhere._ We issue a virtual car
 
 This README.md is the technical stuff. Read this to learn exactly how Frog Pay works, including how we issue cards, how users pay, and how they can make more money in their savings accounts through using our Vaults feature. You can also follow along to learn how to run this app on your local machine.
 
-If you're a judge and you'd like to learn more about exactly how we qualify for the bounties we're applying for, please read the [hackathon submission details](./HACKATHON_SUBMISSION_DETAILS.md).
+If you're a judge and you'd like to learn more about exactly how we qualify for the bounties we're applying for, please read the [Hackathon Submission Details](./HACKATHON_SUBMISSION_DETAILS.md).
 
 ![home](public/homescreen.png)
 
-[Pitch deck](https://www.canva.com/design/DAGxmEsjdnU/pZv82JADsAC_aJHZHu0Hdw/view?utm_content=DAGxmEsjdnU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3abbfeb095)
+[Pitch Deck](https://www.canva.com/design/DAGxmEsjdnU/pZv82JADsAC_aJHZHu0Hdw/view?utm_content=DAGxmEsjdnU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3abbfeb095)
 
-[Demo]()
+[Demo](https://www.youtube.com/watch?v=lukuWBFoFWQ)
 
-[Go to market](./GO_TO_MARKET.md)
-
-[Hackathon submission details](./HACKATHON_SUBMISSION_DETAILS.md)
+[Go to Market](./GO_TO_MARKET.md)
 
 ## Features
 
