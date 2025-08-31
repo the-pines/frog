@@ -2,6 +2,7 @@ import z from 'zod';
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { erc20Abi, isAddress } from 'viem';
+import type { Abi } from 'viem';
 
 import { db } from '@/db';
 import { users, vaults } from '@/db/schema';
@@ -41,7 +42,7 @@ export async function GET(req: NextRequest) {
       orderBy: (t, { desc }) => desc(t.createdAt),
     });
 
-    const abi = (vaultAbiJson as { abi: any }).abi as readonly unknown[];
+    const abi = (vaultAbiJson as { abi: Abi }).abi;
     const enriched = await Promise.all(
       userVaults.map(async (v) => {
         try {

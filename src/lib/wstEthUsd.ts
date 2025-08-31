@@ -1,21 +1,21 @@
 // Frontend-only helpers to convert wstETH amounts to USD using a hardcoded price
 
-const PRICE_MICRO_USDC_PER_WST = 5_391_940_000n; // 5,391.94 USDC per 1 wstETH
+const PRICE_MICRO_USDC_PER_WST = BigInt(5_391_940_000); // 5,391.94 USDC per 1 wstETH
 
 export function wstWeiToUsdcMinor(
   wstWei: string | bigint,
   wstDecimals: number
 ): bigint {
   const wst = BigInt(String(wstWei || '0'));
-  if (wst <= 0n) return 0n;
-  const wstScale = 10n ** BigInt(wstDecimals);
+  if (wst <= BigInt(0)) return BigInt(0);
+  const wstScale = BigInt(10) ** BigInt(wstDecimals);
   return (wst * PRICE_MICRO_USDC_PER_WST) / wstScale;
 }
 
 export function formatUsdFromUsdcMinor(usdcMinor: bigint): string {
-  const cents = (usdcMinor + 5_000n) / 10_000n;
-  const dollarsInt = cents / 100n;
-  const centsTwo = Number(cents % 100n)
+  const cents = (usdcMinor + BigInt(5_000)) / BigInt(10_000);
+  const dollarsInt = cents / BigInt(100);
+  const centsTwo = Number(cents % BigInt(100))
     .toString()
     .padStart(2, '0');
   const dollarsStr = dollarsInt
