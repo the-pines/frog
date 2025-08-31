@@ -11,7 +11,7 @@ export default function AuthedLayout({
     <>
       <Header />
 
-      <main className="py-[70px]">
+      <main className="py-[100px]">
         <AuthProvider>{children}</AuthProvider>
       </main>
 

@@ -41,9 +41,11 @@ export default async function RootLayout({
         className={`${texts.variable} ${headlines.variable} ${amounts.variable} antialiased font-sans`}
       >
         <WalletProvider cookies={cookies}>
-          <main className="relative mx-auto max-w-[393px] min-h-dvh flex flex-col border border-red-200">
-            {children}
-          </main>
+          <div className="relative min-h-svh bg-pond-moss bg-fixed">
+            <main className="relative z-10 mx-auto max-w-[393px] min-h-svh text-frog-foreground">
+              {children}
+            </main>
+          </div>
         </WalletProvider>
       </body>
     </html>
