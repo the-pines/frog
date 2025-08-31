@@ -100,40 +100,40 @@ export async function POST(req: NextRequest) {
       .onConflictDoNothing()
       .returning();
 
-    const userAddress = user.address as `0x${string}`;
-    const [allowance, balance] = await Promise.all([
-      publicClient.readContract({
-        address: LISK_USDC_ADDRESS,
-        abi: erc20Abi,
-        functionName: 'allowance',
-        args: [userAddress, executorAccount.address],
-      }) as Promise<bigint>,
-      publicClient.readContract({
-        address: LISK_USDC_ADDRESS,
-        abi: erc20Abi,
-        functionName: 'balanceOf',
-        args: [userAddress],
-      }) as Promise<bigint>,
-    ]);
+    // const userAddress = user.address as `0x${string}`;
+    // const [allowance, balance] = await Promise.all([
+    //   publicClient.readContract({
+    //     address: LISK_USDC_ADDRESS,
+    //     abi: erc20Abi,
+    //     functionName: 'allowance',
+    //     args: [userAddress, executorAccount.address],
+    //   }) as Promise<bigint>,
+    //   publicClient.readContract({
+    //     address: LISK_USDC_ADDRESS,
+    //     abi: erc20Abi,
+    //     functionName: 'balanceOf',
+    //     args: [userAddress],
+    //   }) as Promise<bigint>,
+    // ]);
 
-    const gbpMinor = String(paymentAuthRequest.amount);
-    const { usdcMinor } = gbpMinorToUsdcMinorToday(gbpMinor);
-    if (allowance < usdcMinor || balance < usdcMinor) {
-      const reason =
-        allowance < usdcMinor
-          ? 'insufficient_usdc_allowance'
-          : 'insufficient_usdc_balance';
-      return new Response(
-        JSON.stringify({
-          approved: false,
-          metadata: { reason },
-        }),
-        {
-          status: 200,
-          headers: STRIPE_HEADERS,
-        }
-      );
-    }
+    // const gbpMinor = String(paymentAuthRequest.amount);
+    // const { usdcMinor } = gbpMinorToUsdcMinorToday(gbpMinor);
+    // if (allowance < usdcMinor || balance < usdcMinor) {
+    //   const reason =
+    //     allowance < usdcMinor
+    //       ? 'insufficient_usdc_allowance'
+    //       : 'insufficient_usdc_balance';
+    //   return new Response(
+    //     JSON.stringify({
+    //       approved: false,
+    //       metadata: { reason },
+    //     }),
+    //     {
+    //       status: 200,
+    //       headers: STRIPE_HEADERS,
+    //     }
+    //   );
+    // }
 
     return new Response(JSON.stringify({ approved: true }), {
       status: 200,
