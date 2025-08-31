@@ -15,7 +15,7 @@ const QuerySchema = z.object({
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { address: string } }
+  { params }: { params: Promise<{ address: string }> }
 ) {
   try {
     const { searchParams } = new URL(req.url);
@@ -28,7 +28,8 @@ export async function GET(
       );
     }
 
-    const address = params.address as `0x${string}`;
+    const { address: addrParam } = await params;
+    const address = addrParam as `0x${string}`;
     if (!isAddress(address)) {
       return NextResponse.json({ error: 'Invalid address' }, { status: 400 });
     }

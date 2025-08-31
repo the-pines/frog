@@ -20,9 +20,9 @@ We would love to attend the Founder House in Buenos Aires. We plan to launch Fro
 
 In our Vaults feature, we allow users to stake and restake their assets into Symbiotic Vaults. We are using existing Vaults from Mellow - [the Lisk WSETH vault](https://app.mellow.finance/vaults/lisk-wsteth-vault) and the [Ethereum mainnet sUSDe vault](https://app.mellow.finance/vaults/ethereum-rsusde).
 
-Our flow is quite complex as we want users to only deposit and withdraw ETH (or USDC) and be unaware of what is happening on the backend. So we have to use approved Routers for swapping within contracts, and then staking these swapped tokens, and using a Router to swap them before withdrawing.
+Our flow is quite complex as we want users to only deposit and withdraw ETH or USDC) and be unaware of what is happening on the backend. So we have to use approved Routers for swapping within contracts, and then staking these swapped tokens, and using a Router to swap them before withdrawing.
 
-You can find our ETH vault contract [here](TODO).
+You can find our ETH vault contract [here](./contracts/liskEth/SymbioticLiskEthVaultProxy.sol) and our USDC vault contract [here](./contracts/mainnetUsdc/SymbioticUSDCVaultProxy.sol).
 
 We will keep building this in the Buildathon and plan to launch in the Argentina regulatory sandbox. After this weekend we plan to spin up a Symbiotic consumer network using the Relay SDK to attest cross-chain vault balances and secure our withdrawal router with stake sourced directly from our vaults. There is a huge network we can build and need to secure - we want to replace traditional banking networks.
 
@@ -37,6 +37,8 @@ To dive even deeper, there is an estimated 400k adults in LATAM who do not have 
 Frog Pay is a solution for this, allowing users to pay with their crypto anywhere while still having full control of their assets. There are also savings features, so users to safely stake their assets - stables and native coins - and earn more money in a self-custodial way.
 
 Our goal is to replace banks entirely. LATAM already has the onramping infrastructure so let's make payments easier. We believe we can bank the unbanked in a way that is actually useful, and better-bank the banked.
+
+We have integrated ENS for showing points which you can find [here](./src/components/features/authed/home/PointsPage.tsx). We will also integrate ENS for sending payments to and from people with Frog Pay.
 
 ## V0 by Vercel
 

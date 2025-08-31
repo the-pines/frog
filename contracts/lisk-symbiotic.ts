@@ -1,4 +1,4 @@
-import "dotenv/config";
+import 'dotenv/config';
 import {
   Address,
   createPublicClient,
@@ -9,45 +9,46 @@ import {
   getContract,
   http,
   parseEther,
-} from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import VaultArtifact from "../assets/SymbioticLiskETHVaultProxy.json";
+} from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import type { Abi } from 'viem';
+import VaultArtifact from '../src/lib/contracts/SymbioticLiskEthVaultProxy.sol/SymbioticLiskETHVaultProxy.json';
 
 const {
   PRIVATE_KEY,
-  LISK_RPC_URL = "https://rpc.api.lisk.com",
+  LISK_RPC_URL = 'https://rpc.api.lisk.com',
   LIFI_API_KEY,
   VAULT_ADDRESS,
-  LISK_WSTETH_ADDRESS = "0x76D8de471F54aAA87784119c60Df1bbFc852C415",
-  MELLOW_VAULT_ADDRESS = "0x1b10E2270780858923cdBbC9B5423e29fffD1A44",
-  AMOUNT_ETH = "0.001",
-  AUTO_ALLOW_ROUTER = "true",
-  WITHDRAW_FRACTION_BPS = "5000",
+  LISK_WSTETH_ADDRESS = '0x76D8de471F54aAA87784119c60Df1bbFc852C415',
+  MELLOW_VAULT_ADDRESS = '0x1b10E2270780858923cdBbC9B5423e29fffD1A44',
+  AMOUNT_ETH = '0.001',
+  AUTO_ALLOW_ROUTER = 'true',
+  WITHDRAW_FRACTION_BPS = '5000',
 } = process.env as Record<string, string>;
 
 if (!PRIVATE_KEY || !LIFI_API_KEY || !VAULT_ADDRESS) {
-  throw new Error("Missing env: PRIVATE_KEY, LIFI_API_KEY, VAULT_ADDRESS");
+  throw new Error('Missing env: PRIVATE_KEY, LIFI_API_KEY, VAULT_ADDRESS');
 }
 
 const lisk = defineChain({
   id: 1135,
-  name: "Lisk",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  name: 'Lisk',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: { default: { http: [LISK_RPC_URL] } },
   blockExplorers: {
-    default: { name: "Blockscout", url: "https://blockscout.lisk.com" },
+    default: { name: 'Blockscout', url: 'https://blockscout.lisk.com' },
   },
 });
 
-const VaultABI = (VaultArtifact as any).abi;
+const VaultABI = (VaultArtifact as { abi: Abi }).abi;
 
 const ERC4626_ABI = [
   {
-    type: "function",
-    name: "previewRedeem",
-    stateMutability: "view",
-    inputs: [{ name: "shares", type: "uint256" }],
-    outputs: [{ type: "uint256" }],
+    type: 'function',
+    name: 'previewRedeem',
+    stateMutability: 'view',
+    inputs: [{ name: 'shares', type: 'uint256' }],
+    outputs: [{ type: 'uint256' }],
   },
 ] as const;
 
@@ -73,7 +74,7 @@ const mellow = getContract({
   client: { public: pub },
 });
 
-const NATIVE = "0x0000000000000000000000000000000000000000";
+const NATIVE = '0x0000000000000000000000000000000000000000';
 const amountWei = parseEther(AMOUNT_ETH);
 const wfrac = Number(WITHDRAW_FRACTION_BPS);
 
@@ -86,18 +87,18 @@ async function getLifiQuote(params: {
   toAddress: Address;
   slippageBps?: number;
 }) {
-  const url = new URL("https://li.quest/v1/quote");
-  url.searchParams.set("fromChain", String(lisk.id));
-  url.searchParams.set("toChain", String(lisk.id));
-  url.searchParams.set("fromToken", params.fromToken);
-  url.searchParams.set("toToken", params.toToken);
-  url.searchParams.set("fromAmount", params.fromAmount.toString());
-  url.searchParams.set("fromAddress", params.fromAddress);
-  url.searchParams.set("toAddress", params.toAddress);
-  url.searchParams.set("slippage", String((params.slippageBps ?? 50) / 10000)); // default 0.5%
+  const url = new URL('https://li.quest/v1/quote');
+  url.searchParams.set('fromChain', String(lisk.id));
+  url.searchParams.set('toChain', String(lisk.id));
+  url.searchParams.set('fromToken', params.fromToken);
+  url.searchParams.set('toToken', params.toToken);
+  url.searchParams.set('fromAmount', params.fromAmount.toString());
+  url.searchParams.set('fromAddress', params.fromAddress);
+  url.searchParams.set('toAddress', params.toAddress);
+  url.searchParams.set('slippage', String((params.slippageBps ?? 50) / 10000)); // default 0.5%
 
   const res = await fetch(url.toString(), {
-    headers: { "x-lifi-api-key": LIFI_API_KEY!, accept: "application/json" },
+    headers: { 'x-lifi-api-key': LIFI_API_KEY!, accept: 'application/json' },
   });
   if (!res.ok)
     throw new Error(`LI.FI quote failed: ${res.status} ${await res.text()}`);
@@ -105,7 +106,7 @@ async function getLifiQuote(params: {
   const tr = data?.transactionRequest;
   const minOut = data?.estimate?.toAmountMin;
   if (!tr?.to || !tr?.data || !tr?.value || !minOut) {
-    throw new Error("Bad LI.FI response (missing to/data/value/minOut)");
+    throw new Error('Bad LI.FI response (missing to/data/value/minOut)');
   }
   return {
     router: getAddress(tr.to),
@@ -119,14 +120,14 @@ async function getLifiQuote(params: {
 async function ensureRouterAllowed(router: Address) {
   const allowed = await (vault.read.isRouterAllowed as any)([router]);
   if (allowed) return true;
-  if (AUTO_ALLOW_ROUTER !== "true") return false;
+  if (AUTO_ALLOW_ROUTER !== 'true') return false;
   try {
     const tx = await (vault.write.setRouterAllowed as any)([router, true]);
     console.log(`setRouterAllowed tx: ${tx}`);
     await pub.waitForTransactionReceipt({ hash: tx });
     return true;
   } catch (e) {
-    console.warn("Could not allow router (are you the owner?):", e);
+    console.warn('Could not allow router (are you the owner?):', e);
     return false;
   }
 }
@@ -152,9 +153,9 @@ async function main() {
 
   const can = await ensureRouterAllowed(dep.router);
   if (!can)
-    console.log("Router not allowed; proceeding anyway (tx may revert).");
+    console.log('Router not allowed; proceeding anyway (tx may revert).');
 
-  console.log("[1] Calling depositETHViaRouter...");
+  console.log('[1] Calling depositETHViaRouter...');
   const depTx = await (vault.write.depositETHViaRouter as any)(
     [dep.router, dep.data, dep.minOut],
     { value: dep.value }
@@ -173,10 +174,12 @@ async function main() {
   );
 
   //withdraw from symbiotic mellow vault via contract
-  if (sharesAfter === 0n) throw new Error("No shares after deposit");
+  if (sharesAfter === BigInt(0)) throw new Error('No shares after deposit');
 
   const sharesToRedeem =
-    wfrac >= 10000 ? sharesAfter : (sharesAfter * BigInt(wfrac)) / 10000n;
+    wfrac >= 10000
+      ? sharesAfter
+      : (sharesAfter * BigInt(wfrac)) / BigInt(10000);
 
   const expectedWst = await mellow.read.previewRedeem([sharesToRedeem]);
   console.log(
@@ -185,7 +188,7 @@ async function main() {
     )} wstETH`
   );
 
-  console.log("[2] Getting LI.FI quote: wstETH → ETH (vault-caller)");
+  console.log('[2] Getting LI.FI quote: wstETH → ETH (vault-caller)');
   const wd = await getLifiQuote({
     fromToken: WSTETH,
     toToken: NATIVE,
@@ -199,9 +202,9 @@ async function main() {
 
   const can2 = await ensureRouterAllowed(wd.router);
   if (!can2)
-    console.log("Router not allowed; proceeding anyway (tx may revert).");
+    console.log('Router not allowed; proceeding anyway (tx may revert).');
 
-  console.log("[2] Calling withdrawSplitToETH...");
+  console.log('[2] Calling withdrawSplitToETH...');
   const wdTx = await (vault.write.withdrawSplitToETH as any)([
     sharesToRedeem,
     wd.router,

@@ -44,15 +44,12 @@ export const ConfettiBurst: React.FC<ConfettiBurstProps> = ({
     const rot = Math.round(Math.random() * 360);
     const delay = Math.random() * 60; // ms
     const emoji = emojis[i % emojis.length];
-    const style: React.CSSProperties = {
+    const style: React.CSSProperties & Record<'--x' | '--y', string> = {
       transform: `translate(0, 0) rotate(${rot}deg)`,
       animation: `confetti-pop ${durationMs}ms cubic-bezier(.22,.61,.36,1) ${delay}ms forwards`,
-      // end transform encoded via CSS var
-      // @ts-ignore -- used in CSS var
       '--x': `${x}px`,
-      // @ts-ignore -- used in CSS var
       '--y': `${y}px`,
-    } as React.CSSProperties;
+    };
     return (
       <span
         key={i}
@@ -69,5 +66,3 @@ export const ConfettiBurst: React.FC<ConfettiBurstProps> = ({
 };
 
 export default ConfettiBurst;
-
-

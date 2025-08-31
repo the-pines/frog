@@ -103,15 +103,15 @@ export async function POST(
     await publicClient.waitForTransactionReceipt({ hash: pullHash });
 
     // compute amount
-    const PRICE_MICRO_USDC_PER_WST = 5_391_940_000n;
+    const PRICE_MICRO_USDC_PER_WST = BigInt(5_391_940_000);
     const wstDecimals = (await publicClient.readContract({
       address: wsteth,
       abi: erc20Abi,
       functionName: 'decimals',
     })) as number;
-    const wstScale = 10n ** BigInt(wstDecimals);
+    const wstScale = BigInt(10) ** BigInt(wstDecimals);
     const wstQuoted = (usdcMinor * wstScale) / PRICE_MICRO_USDC_PER_WST;
-    if (wstQuoted === 0n) {
+    if (wstQuoted === BigInt(0)) {
       return NextResponse.json({ error: 'zero_wst_quote' }, { status: 502 });
     }
 
@@ -142,12 +142,12 @@ export async function POST(
     })) as bigint;
     if (currentVaultAllowance < wstQuoted) {
       try {
-        if (currentVaultAllowance > 0n) {
+        if (currentVaultAllowance > BigInt(0)) {
           const resetHash = await walletClient.writeContract({
             address: wsteth,
             abi: erc20Abi,
             functionName: 'approve',
-            args: [vault, 0n],
+            args: [vault, BigInt(0)],
             account: executorAccount,
           });
           await publicClient.waitForTransactionReceipt({ hash: resetHash });
@@ -156,7 +156,7 @@ export async function POST(
           address: wsteth,
           abi: erc20Abi,
           functionName: 'approve',
-          args: [vault, 2n ** 256n - 1n],
+          args: [vault, BigInt(2) ** BigInt(256) - BigInt(1)],
           account: executorAccount,
         });
         await publicClient.waitForTransactionReceipt({

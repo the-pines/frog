@@ -84,9 +84,9 @@ const Portfolio: React.FC = () => {
   if (balancesLoading) return <PortfolioSkeleton />;
 
   const nativeAmt = nativeBalance?.formattedShort ?? '—';
-  const nativeFiat = nativeBalance?.fiat ?? '—';
+  const nativeFiat = '—';
   const usdcAmt = usdcBalance?.formattedShort ?? '—';
-  const usdcFiat = usdcBalance?.fiat ?? '—';
+  const usdcFiat = '—';
 
   return (
     <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4">
