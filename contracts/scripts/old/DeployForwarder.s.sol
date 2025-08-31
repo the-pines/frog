@@ -9,7 +9,7 @@ contract DeployForwarder is Script {
     function run() external {
         uint256 pk = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(pk);
-        ERC2771Forwarder fwd = new ERC2771Forwarder("Monad Pay Forwarder");
+        ERC2771Forwarder fwd = new ERC2771Forwarder("Forwarder");
         console2.log("ERC2771Forwarder:", address(fwd));
         vm.stopBroadcast();
     }
