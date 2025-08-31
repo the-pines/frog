@@ -7,6 +7,12 @@ import { useAppKitAccount } from '@reown/appkit/react';
 
 type LeaderItem = { address: Address; points: string };
 
+function formatTwoDecimalsFromUnits(value: bigint, decimals: number): string {
+  const full = formatUnits(value, decimals);
+  const [int, dec] = full.split('.');
+  return dec ? `${int}.${dec.slice(0, 2)}` : int;
+}
+
 function useQueryPoints(address?: Address) {
   const enabled = Boolean(address);
   const query = useQuery({
@@ -123,7 +129,7 @@ const PointsPage: React.FC = () => {
 
   const formatted = useMemo(() => {
     if (!data) return '0';
-    return formatUnits(BigInt(data.balance), data.decimals);
+    return formatTwoDecimalsFromUnits(BigInt(data.balance), data.decimals);
   }, [data]);
 
   const getEmojiForRank = (rank: number) => {
@@ -294,7 +300,10 @@ const PointsPage: React.FC = () => {
                         ) : null}
                       </div>
                       <div className="text-right font-mono tabular-nums text-frog-foreground">
-                        {formatUnits(BigInt(item.points), data?.decimals ?? 18)}
+                        {formatTwoDecimalsFromUnits(
+                          BigInt(item.points),
+                          data?.decimals ?? 18
+                        )}
                         <span className="ml-1 text-frog-muted">points</span>
                       </div>
                     </div>

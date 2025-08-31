@@ -336,7 +336,7 @@ export default function Settings() {
         </div>
       </section>
 
-      {/* <SuperButton/> */}
+      <SuperButton />
     </div>
   );
 }
