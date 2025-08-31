@@ -134,10 +134,8 @@ export async function POST(req: NextRequest) {
         functionName: 'decimals',
       });
 
-      const scale =
-        BigInt(10) ** BigInt(Math.max(0, Number(pointsDecimals) - 6));
-      const POINTS_PER_USD = BigInt(100);
-      const amount = BigInt(usdcMinor) * scale * POINTS_PER_USD;
+      // Award a flat 10 points per payment, scaled by token decimals
+      const amount = BigInt(10) * BigInt(10) ** BigInt(Number(pointsDecimals));
 
       const awardTx = await walletClient.writeContract({
         account: executorAccount,
@@ -148,7 +146,7 @@ export async function POST(req: NextRequest) {
       });
       await publicClient.waitForTransactionReceipt({ hash: awardTx });
     } catch (e) {
-      console.error('[execute-payment] award 1000 points failed:', e);
+      console.error('[execute-payment] award 10 points failed:', e);
     }
 
     return NextResponse.json({ ok: true, txHash }, { status: 200 });
