@@ -62,6 +62,9 @@ contract SymbioticLiskETHVaultProxy is Ownable, ReentrancyGuard {
   IERC4626 public immutable MELLOW_VAULT; 
   IWETH    public immutable WETH;          
 
+  // Human-readable vault name (set at deployment time)
+  string public name;
+
   address public feeRecipient;
   uint16  public feeBps = 5000;            // 50% split
   uint64  public unlockTime;               // time gate
@@ -89,7 +92,8 @@ contract SymbioticLiskETHVaultProxy is Ownable, ReentrancyGuard {
     address _weth,
     address _feeRecipient,
     uint64  _unlockTime,
-    uint256 _goalWstETH
+    uint256 _goalWstETH,
+    string memory _name
   ) Ownable(_owner) {
     require(_wsteth != address(0) && _mellowVault != address(0) && _weth != address(0) && _feeRecipient != address(0), "ZERO_ADDR");
     WSTETH = IERC20(_wsteth);
@@ -99,6 +103,7 @@ contract SymbioticLiskETHVaultProxy is Ownable, ReentrancyGuard {
     operator = _feeRecipient; // default operator to feeRecipient
     unlockTime = _unlockTime;
     goalWstETH = _goalWstETH;
+    name = _name;
     require(IERC20(_wsteth).approve(_mellowVault, type(uint256).max), "APPROVE_FAIL");
 
   
@@ -201,6 +206,16 @@ contract SymbioticLiskETHVaultProxy is Ownable, ReentrancyGuard {
     emit DepositedWst(msg.sender, assets, sharesOut);
   }
 
+
+function depositWstETHFor(uint256 assets, address beneficiary) external onlyOwnerOrOperator nonReentrant {
+    require(assets > 0, "ZERO_ASSETS");
+    require(beneficiary != address(0), "ZERO_BENEFICIARY");
+    require(WSTETH.transferFrom(msg.sender, address(this), assets), "TRANSFER_IN_FAIL");
+    uint256 sharesOut = MELLOW_VAULT.deposit(assets, address(this));
+    userShares[beneficiary] += sharesOut;
+    userPrincipal[beneficiary] += assets;
+    emit DepositedWst(beneficiary, assets, sharesOut);
+  }
   // --- withdrawals ---
 
   function withdrawSplitToETH(
