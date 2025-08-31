@@ -2,20 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAddress, isAddress, zeroAddress } from 'viem';
 import { publicClient } from '@/config/viem-config';
 import pointsAbiJson from '@/lib/contracts/PointsToken.sol/PointsToken.json';
+
 import {
-  POINTS_TOKEN_ADDRESS as ENV_POINTS,
-  ADMIN_LEADERBOARD_ADDRESS as ENV_LEADER,
-} from '@/config/constants/envs';
-import {
-  POINTS_TOKEN_ADDRESS as CONST_POINTS,
-  ADMIN_LEADERBOARD_ADDRESS as CONST_LEADER,
+  POINTS_TOKEN_ADDRESS,
+  ADMIN_LEADERBOARD_ADDRESS,
 } from '@/config/constants/addresses';
 
 const abi = (pointsAbiJson as { abi: unknown }).abi as readonly unknown[];
 
 function getPointsAddress(): `0x${string}` | null {
-  const env = (ENV_POINTS as `0x${string}`) || ('' as `0x${string}`);
-  const fallback = (CONST_POINTS as `0x${string}`) || ('' as `0x${string}`);
+  const env = (POINTS_TOKEN_ADDRESS as `0x${string}`) || ('' as `0x${string}`);
+  const fallback =
+    (POINTS_TOKEN_ADDRESS as `0x${string}`) || ('' as `0x${string}`);
   const addr =
     env && env !== (('0x' + '0'.repeat(40)) as `0x${string}`) ? env : fallback;
   if (!addr || !isAddress(addr)) return null;
@@ -43,8 +41,10 @@ const adminLeaderboardAbi = [
 ] as const satisfies readonly unknown[];
 
 function getAdminLeaderboardAddress(): `0x${string}` | null {
-  const env = (ENV_LEADER as `0x${string}`) || ('' as `0x${string}`);
-  const fallback = (CONST_LEADER as `0x${string}`) || ('' as `0x${string}`);
+  const env =
+    (ADMIN_LEADERBOARD_ADDRESS as `0x${string}`) || ('' as `0x${string}`);
+  const fallback =
+    (ADMIN_LEADERBOARD_ADDRESS as `0x${string}`) || ('' as `0x${string}`);
   const addr =
     env && env !== (('0x' + '0'.repeat(40)) as `0x${string}`) ? env : fallback;
   if (!addr || !isAddress(addr)) return null;
