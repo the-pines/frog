@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { BLOCKSCOUT_URL } from '@/config/constants/envs';
 import { formatUnits, getAddress, type Address } from 'viem';
 
+const MAX_DP = 4;
+
 export type Transaction = {
   kind: 'native' | 'erc20';
   hash: string;
@@ -16,6 +18,7 @@ export type Transaction = {
   // common extras
   direction: 'in' | 'out';
   formatted: string;
+  formattedShort: string;
   decimals: number;
   symbol?: string;
 
@@ -38,11 +41,34 @@ function norm(addr: string | null | undefined): Address | null {
   }
 }
 
+function trimZeros(s: string) {
+  if (!s.includes('.')) return s;
+  const [i, f] = s.split('.');
+  const fx = f.replace(/0+$/g, '');
+  return fx.length ? `${i}.${fx}` : i;
+}
+
+export function formatRounded(
+  raw: bigint,
+  decimals: number,
+  maxFractionDigits = MAX_DP
+) {
+  if (maxFractionDigits < 0) return formatUnits(raw, decimals);
+  if (decimals <= maxFractionDigits) {
+    return trimZeros(formatUnits(raw, decimals));
+  }
+  const factor = BigInt(10) ** BigInt(decimals - maxFractionDigits);
+  let q = raw / factor;
+  const r = raw % factor;
+  if (r * BigInt(2) >= factor) q += BigInt(1); // half-up
+  return trimZeros(formatUnits(q, maxFractionDigits));
+}
+
 async function fetchTxs(opts: {
   address: Address;
   limit?: number;
   offset?: number;
-  all?: boolean;
+  all?: boolean; // tokens and native
 }) {
   const { address, limit = 20, offset = 0, all = true } = opts;
   const owner = getAddress(address);
@@ -69,15 +95,14 @@ async function fetchTxs(opts: {
     ? (nativeRaw
         .map((t) => {
           const valueStr = (t.value ?? '0') as string;
-          if (valueStr === '0' || BigInt(valueStr) === BigInt(0)) {
-            return null;
-          }
+          if (valueStr === '0' || BigInt(valueStr) === BigInt(0)) return null;
 
           const from = norm(t.from ?? t.from_address);
           const to = norm(t.to ?? t.to_address);
           const decimals = lisk.nativeCurrency.decimals ?? 18;
           const symbol = lisk.nativeCurrency.symbol ?? 'ETH';
           const direction: 'in' | 'out' = to === owner ? 'in' : 'out';
+          const raw = BigInt(valueStr);
 
           return {
             kind: 'native',
@@ -90,7 +115,8 @@ async function fetchTxs(opts: {
             decimals,
             symbol,
             direction,
-            formatted: formatUnits(BigInt(valueStr), decimals),
+            formatted: formatUnits(raw, decimals),
+            formattedShort: formatRounded(raw, decimals),
           } as Transaction;
         })
         .filter(Boolean) as Transaction[])
@@ -103,7 +129,8 @@ async function fetchTxs(opts: {
         const to = norm(t.to ?? t.to_address);
         const contractAddress = norm(t.contractAddress ?? t.contractaddress) as Address; //prettier-ignore
         const tokenDecimal = Number(t.tokenDecimal ?? t.decimals ?? 18);
-        const raw = (t.value ?? t.tokenValue ?? '0') as string;
+        const rawStr = (t.value ?? t.tokenValue ?? '0') as string;
+        const raw = BigInt(rawStr);
         const symbol = t.tokenSymbol ?? t.symbol ?? '';
         const name = t.tokenName ?? t.name ?? '';
         const direction: 'in' | 'out' = to === owner ? 'in' : 'out';
@@ -117,13 +144,14 @@ async function fetchTxs(opts: {
           tokenSymbol: symbol,
           tokenName: name,
           tokenDecimal,
-          value: raw,
+          value: rawStr,
           blockNumber: Number(t.blockNumber ?? t.block_number ?? 0),
           timeStamp: Number(t.timeStamp ?? t.timestamp ?? 0),
           decimals: tokenDecimal,
           symbol,
           direction,
-          formatted: formatUnits(BigInt(raw), tokenDecimal),
+          formatted: formatUnits(raw, tokenDecimal),
+          formattedShort: formatRounded(raw, tokenDecimal),
         } as Transaction;
       })
     : [];

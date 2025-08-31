@@ -12,6 +12,7 @@ import {
   http,
 } from 'viem';
 import { lisk } from 'viem/chains';
+import { formatRounded } from './useQueryTransactions';
 
 async function fetchErc20Balance(opts: {
   token: { address: Address; chain?: ReturnType<typeof defineChain> };
@@ -51,6 +52,7 @@ async function fetchErc20Balance(opts: {
     decimals,
     symbol,
     formatted: formatUnits(raw, decimals),
+    formattedShort: formatRounded(raw, decimals),
   };
 }
 

@@ -10,6 +10,7 @@ import {
   http,
 } from 'viem';
 import { lisk } from 'viem/chains';
+import { formatRounded } from './useQueryTransactions';
 
 async function fetchNativeBalance(owner: Address) {
   const client = createPublicClient({
@@ -28,6 +29,7 @@ async function fetchNativeBalance(owner: Address) {
     decimals,
     symbol,
     formatted: formatUnits(wei, decimals),
+    formattedShort: formatRounded(wei, decimals),
   };
 }
 
