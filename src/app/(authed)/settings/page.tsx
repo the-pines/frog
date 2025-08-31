@@ -242,98 +242,98 @@ export default function Settings() {
   }, []);
 
   return (
-    <div className="relative mx-auto w-full max-w-[393px] px-4 pt-16 pb-12 flex flex-col gap-8">
-      <div className="pointer-events-none absolute -top-6 left-0 right-0 h-36 bg-gradient-to-b from-white/25 via-white/0 to-transparent blur-xl"></div>
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black/25 via-black/0 to-transparent"></div>
-      <div className="pointer-events-none absolute inset-0 opacity-10 mix-blend-overlay [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.08)_0,rgba(255,255,255,0.08)_1px,transparent_1px,transparent_2px),repeating-linear-gradient(90deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1px,transparent_1px,transparent_2px)]"></div>
-
-      <div className="relative overflow-hidden rounded-3xl backdrop-blur-md bg-[rgba(0,0,0,0.28)] ring-1 ring-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.22)] px-6 py-8 text-center">
-        <div className="text-[11px] uppercase tracking-wide text-white/70 mb-1">
+    <div className="relative mx-auto w-full max-w-[393px] px-4 pt-10 pb-12 flex flex-col gap-6">
+      <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 px-6 py-6 text-center">
+        <div className="text-[11px] uppercase tracking-wide text-frog-muted mb-0">
           Account
         </div>
-        <div className="text-base font-semibold text-white/95">
+        <div className="text-base font-semibold text-frog-foreground">
           Logged in as
         </div>
-        <div className="mt-1 text-xl leading-tight font-extrabold tracking-tight text-white/95">
+        <div className="mt-1 text-xl leading-tight font-extrabold tracking-tight text-frog-foreground font-display">
           {ident}
         </div>
         <div className="mt-4">
           <button
             onClick={logout}
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 hover:bg-white/15 px-4 h-10 text-sm text-white/95 shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/8 px-4 h-10 text-sm text-frog-foreground"
           >
             <span>Log out</span>
           </button>
         </div>
-      </div>
+      </section>
 
-      <div className="overflow-hidden rounded-3xl backdrop-blur-md bg-[rgba(0,0,0,0.28)] ring-1 ring-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.22)]">
-        <div className="px-6 py-4 flex items-center justify-between">
-          <div className="text-white/90 font-semibold">Token Approvals</div>
+      <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <h2 className="text-sm font-medium text-frog-muted">
+            Token Approvals
+          </h2>
           {approvalsQuery.isFetching ? (
-            <div className="text-white/70 text-xs inline-flex items-center gap-2">
+            <div className="text-frog-muted text-xs inline-flex items-center gap-2">
               <Spinner size={14} /> Refreshing…
             </div>
           ) : (
             <button
               onClick={() => approvalsQuery.refetch()}
-              className="text-xs rounded-full border border-white/20 bg-white/10 hover:bg-white/15 px-3 h-8 text-white/85"
+              className="text-xs rounded-full border border-white/10 bg-white/5 hover:bg-white/8 px-3 h-8 text-frog-foreground/90"
             >
               Refresh
             </button>
           )}
         </div>
-        <div className="flex flex-col mt-1">
+        <ul className="flex flex-col">
           {!owner ? (
-            <div className="py-6 text-[#C8D1DA] text-sm">
+            <li className="py-4 px-4 text-frog-muted text-sm">
               Connect wallet to view approvals.
-            </div>
+            </li>
           ) : approvalsQuery.isLoading ? (
-            <div className="py-6 text-[#C8D1DA] text-sm">
+            <li className="py-4 px-4 text-frog-muted text-sm">
               Loading approvals…
-            </div>
+            </li>
           ) : (approvalsQuery.data ?? []).length === 0 ? (
-            <div className="py-6 text-[#C8D1DA] text-sm">
+            <li className="py-4 px-4 text-frog-muted text-sm">
               No active approvals detected.
-            </div>
+            </li>
           ) : (
             (approvalsQuery.data ?? []).map((row, idx) => (
-              <div
+              <li
                 key={`${row.token}-${row.spender}-${idx}`}
-                className={`grid grid-cols-[1fr_auto] items-center gap-3 px-6 py-3 odd:bg-white/5`}
+                className="rounded-xl hover:bg-white/5"
               >
-                <div className="min-w-0">
-                  <div className="text-white/90 text-sm truncate">
-                    {row.symbol || 'Token'}
-                    <span className="ml-2 text-white/60 text-xs">
-                      {row.token}
-                    </span>
+                <div className="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-2">
+                  <div className="min-w-0">
+                    <div className="text-frog-foreground text-sm truncate">
+                      {row.symbol || 'Token'}
+                      <span className="ml-2 text-frog-muted text-xs">
+                        {row.token}
+                      </span>
+                    </div>
+                    <div className="text-frog-muted text-xs truncate">
+                      Spender{' '}
+                      {`${row.spender.slice(0, 8)}…${row.spender.slice(-6)}`}
+                    </div>
+                    <div className="text-frog-muted text-xs">
+                      Allowance {prettyAllowance(row.allowance, row.decimals)}{' '}
+                      {row.symbol}
+                    </div>
                   </div>
-                  <div className="text-white/70 text-xs truncate">
-                    Spender:{' '}
-                    {`${row.spender.slice(0, 8)}…${row.spender.slice(-6)}`}
-                  </div>
-                  <div className="text-white/70 text-xs">
-                    Allowance: {prettyAllowance(row.allowance, row.decimals)}{' '}
-                    {row.symbol}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => revoke(row)}
+                      className="rounded-full border border-rose-300/30 bg-rose-400/15 hover:bg-rose-400/25 text-rose-100 px-3 h-9 text-xs"
+                    >
+                      Revoke
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => revoke(row)}
-                    className="rounded-full border border-rose-300/30 bg-rose-400/15 hover:bg-rose-400/25 text-rose-100 px-3 h-9 text-xs"
-                  >
-                    Revoke
-                  </button>
-                </div>
-              </div>
+              </li>
             ))
           )}
-        </div>
-        <div className="px-6 py-3 text-[11px] text-white/60">
+        </ul>
+        <div className="px-4 py-3 text-[11px] text-frog-muted">
           Tip: Revoking approvals may stop this app from working correctly
         </div>
-      </div>
+      </section>
     </div>
   );
 }
