@@ -1,0 +1,319 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        { "name": "_minter", "type": "address", "internalType": "address" }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "balanceOf",
+      "inputs": [{ "name": "", "type": "address", "internalType": "address" }],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "burn",
+      "inputs": [
+        { "name": "from", "type": "address", "internalType": "address" },
+        { "name": "amount", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "decimals",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint8", "internalType": "uint8" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "mint",
+      "inputs": [
+        { "name": "to", "type": "address", "internalType": "address" },
+        { "name": "amount", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "minter",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "address", "internalType": "address" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "name",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "string", "internalType": "string" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "setMinter",
+      "inputs": [
+        { "name": "_minter", "type": "address", "internalType": "address" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "symbol",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "string", "internalType": "string" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "transfer",
+      "inputs": [
+        { "name": "", "type": "address", "internalType": "address" },
+        { "name": "", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
+      "stateMutability": "pure"
+    },
+    {
+      "type": "event",
+      "name": "MinterUpdated",
+      "inputs": [
+        {
+          "name": "oldMinter",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newMinter",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "Transfer",
+      "inputs": [
+        {
+          "name": "from",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "to",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "value",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    }
+  ],
+  "bytecode": {
+    "object": "0x608034607057601f61054938819003918201601f19168301916001600160401b03831184841017607557808492602094604052833981010312607057516001600160a01b03811690819003607057600080546001600160a01b0319169190911790556040516104bd908161008c8239f35b600080fd5b634e487b7160e01b600052604160045260246000fdfe6080604052600436101561001257600080fd5b60003560e01c806306fdde031461039c5780630754617214610373578063313ce5671461035757806340c10f19146102cf57806370a082311461029557806395d89b41146102295780639dc29fac14610142578063a9059cbb146100f75763fca3b5aa1461007f57600080fd5b346100f25760203660031901126100f257610098610438565b6000546001600160a01b038116916100b133841461044e565b6001600160a01b03169182907f1cf2de25c5bf439ac0287061c3a0fa69b3b02867d0ccfd2ded34e42577050b73600080a36001600160a01b03191617600055005b600080fd5b346100f25760403660031901126100f257610110610438565b5060405162461bcd60e51b81526020600482015260096024820152681cdbdd5b189bdd5b9960ba1b6044820152606490fd5b346100f25760403660031901126100f25761015b610438565b6024359061017460018060a01b0360005416331461044e565b6001600160a01b031660008181526001602052604090205482116101f55780600052600160205260406000208054908382039182116101df576000937fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9260209255604051908152a3005b634e487b7160e01b600052601160045260246000fd5b60405162461bcd60e51b815260206004820152600c60248201526b1a5b9cdd59999a58da595b9d60a21b6044820152606490fd5b346100f25760003660031901126100f257604051604081019080821067ffffffffffffffff83111761027f5761027b916040526006815265121413d2539560d21b6020820152604051918291826103ef565b0390f35b634e487b7160e01b600052604160045260246000fd5b346100f25760203660031901126100f2576001600160a01b036102b6610438565b1660005260016020526020604060002054604051908152f35b346100f25760403660031901126100f2576102e8610438565b6024359061030160018060a01b0360005416331461044e565b60018060a01b03169081600052600160205260406000208054908282018092116101df576000927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9260209255604051908152a3005b346100f25760003660031901126100f257602060405160008152f35b346100f25760003660031901126100f2576000546040516001600160a01b039091168152602090f35b346100f25760003660031901126100f257604051604081019080821067ffffffffffffffff83111761027f5761027b91604052600b81526a48756e7420506f696e747360a81b6020820152604051918291825b91909160208152825180602083015260005b818110610422575060409293506000838284010152601f8019910116010190565b8060208092870101516040828601015201610401565b600435906001600160a01b03821682036100f257565b1561045557565b60405162461bcd60e51b815260206004820152600a6024820152693737ba1036b4b73a32b960b11b6044820152606490fdfea264697066735822122084d23fd5c4f293b6c1f7f121e09a3686a7974f4c8cf65085c3170f0df33709ad64736f6c634300081c0033",
+    "sourceMap": "58:1188:9:-:0;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;-1:-1:-1;;;;;58:1188:9;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;58:1188:9;;;;;;;;-1:-1:-1;58:1188:9;;-1:-1:-1;;;;;;58:1188:9;;;;;;;;;;;;;;;;;-1:-1:-1;58:1188:9;;;;;;-1:-1:-1;58:1188:9;;;;;-1:-1:-1;58:1188:9",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600436101561001257600080fd5b60003560e01c806306fdde031461039c5780630754617214610373578063313ce5671461035757806340c10f19146102cf57806370a082311461029557806395d89b41146102295780639dc29fac14610142578063a9059cbb146100f75763fca3b5aa1461007f57600080fd5b346100f25760203660031901126100f257610098610438565b6000546001600160a01b038116916100b133841461044e565b6001600160a01b03169182907f1cf2de25c5bf439ac0287061c3a0fa69b3b02867d0ccfd2ded34e42577050b73600080a36001600160a01b03191617600055005b600080fd5b346100f25760403660031901126100f257610110610438565b5060405162461bcd60e51b81526020600482015260096024820152681cdbdd5b189bdd5b9960ba1b6044820152606490fd5b346100f25760403660031901126100f25761015b610438565b6024359061017460018060a01b0360005416331461044e565b6001600160a01b031660008181526001602052604090205482116101f55780600052600160205260406000208054908382039182116101df576000937fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9260209255604051908152a3005b634e487b7160e01b600052601160045260246000fd5b60405162461bcd60e51b815260206004820152600c60248201526b1a5b9cdd59999a58da595b9d60a21b6044820152606490fd5b346100f25760003660031901126100f257604051604081019080821067ffffffffffffffff83111761027f5761027b916040526006815265121413d2539560d21b6020820152604051918291826103ef565b0390f35b634e487b7160e01b600052604160045260246000fd5b346100f25760203660031901126100f2576001600160a01b036102b6610438565b1660005260016020526020604060002054604051908152f35b346100f25760403660031901126100f2576102e8610438565b6024359061030160018060a01b0360005416331461044e565b60018060a01b03169081600052600160205260406000208054908282018092116101df576000927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9260209255604051908152a3005b346100f25760003660031901126100f257602060405160008152f35b346100f25760003660031901126100f2576000546040516001600160a01b039091168152602090f35b346100f25760003660031901126100f257604051604081019080821067ffffffffffffffff83111761027f5761027b91604052600b81526a48756e7420506f696e747360a81b6020820152604051918291825b91909160208152825180602083015260005b818110610422575060409293506000838284010152601f8019910116010190565b8060208092870101516040828601015201610401565b600435906001600160a01b03821682036100f257565b1561045557565b60405162461bcd60e51b815260206004820152600a6024820152693737ba1036b4b73a32b960b11b6044820152606490fdfea264697066735822122084d23fd5c4f293b6c1f7f121e09a3686a7974f4c8cf65085c3170f0df33709ad64736f6c634300081c0033",
+    "sourceMap": "58:1188:9:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;846:19;;;58:1188;;;;;;;;;-1:-1:-1;;58:1188:9;;;;;;:::i;:::-;;;-1:-1:-1;;;;;58:1188:9;;;516:43;524:10;:20;;516:43;:::i;:::-;-1:-1:-1;;;;;58:1188:9;;;;710:30;58:1188;;710:30;-1:-1:-1;;;;;;58:1188:9;;;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;;;:::i;:::-;-1:-1:-1;58:1188:9;;-1:-1:-1;;;846:19:9;;58:1188;;846:19;;58:1188;;;;;;-1:-1:-1;;;58:1188:9;;;;846:19;;;58:1188;;;;;;-1:-1:-1;;58:1188:9;;;;;;:::i;:::-;;;;516:43;58:1188;;;;;;;;524:10;:20;516:43;:::i;:::-;-1:-1:-1;;;;;58:1188:9;;;;;;;;;;;;1111:25;-1:-1:-1;58:1188:9;;;;;;;;;;;;;;;;;;;;;;;;1203:34;58:1188;;;;;;;;;1203:34;58:1188;;;;;;;;;;;;;;;;-1:-1:-1;;;58:1188:9;;;;;;;;;;;;-1:-1:-1;;;58:1188:9;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;58:1188:9;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;-1:-1:-1;;;;;58:1188:9;;:::i;:::-;;;;284:44;58:1188;;;;;;;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;;;:::i;:::-;;;;516:43;58:1188;;;;;;;;524:10;:20;516:43;:::i;:::-;58:1188;;;;;;;;;;;;;;;;;;;;;;;;;;;;;984:32;58:1188;;;;;;;;;984:32;58:1188;;;;;;;-1:-1:-1;;58:1188:9;;;;;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;;;;;-1:-1:-1;;;;;58:1188:9;;;;;;;;;;;;;;-1:-1:-1;;58:1188:9;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;58:1188:9;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;58:1188:9;;;;;;:::o;:::-;;;;:::o;:::-;;;-1:-1:-1;;;58:1188:9;;;;;;;;;;;;-1:-1:-1;;;58:1188:9;;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "balanceOf(address)": "70a08231",
+    "burn(address,uint256)": "9dc29fac",
+    "decimals()": "313ce567",
+    "mint(address,uint256)": "40c10f19",
+    "minter()": "07546172",
+    "name()": "06fdde03",
+    "setMinter(address)": "fca3b5aa",
+    "symbol()": "95d89b41",
+    "transfer(address,uint256)": "a9059cbb"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_minter\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldMinter\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newMinter\",\"type\":\"address\"}],\"name\":\"MinterUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"burn\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"minter\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_minter\",\"type\":\"address\"}],\"name\":\"setMinter\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/points/PointsToken.sol\":\"PointsToken\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":openzeppelin/=node_modules/openzeppelin/\"],\"viaIR\":true},\"sources\":{\"contracts/points/PointsToken.sol\":{\"keccak256\":\"0xa1af45dc911476f4954122642c35ea9c5d66bcc815dfa88318e3a568fbe89d97\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://dba4a185b6d5a5cbe00a78f2b81ec6b70e49ecddc241aa9cfdf6818697ac2992\",\"dweb:/ipfs/QmfYPkqv5dc8bqUVj3CZk4PrkMnnvJKdvHexWfCKGz4JAh\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": { "version": "0.8.28+commit.7893614a" },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            { "internalType": "address", "name": "_minter", "type": "address" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "oldMinter",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newMinter",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "MinterUpdated",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "Transfer",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "", "type": "address" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "balanceOf",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "from", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "burn"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "decimals",
+          "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }]
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "to", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "mint"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "minter",
+          "outputs": [
+            { "internalType": "address", "name": "", "type": "address" }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "name",
+          "outputs": [
+            { "internalType": "string", "name": "", "type": "string" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "_minter", "type": "address" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "setMinter"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "symbol",
+          "outputs": [
+            { "internalType": "string", "name": "", "type": "string" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "", "type": "address" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "transfer",
+          "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }]
+        }
+      ],
+      "devdoc": { "kind": "dev", "methods": {}, "version": 1 },
+      "userdoc": { "kind": "user", "methods": {}, "version": 1 }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
+        "openzeppelin/=node_modules/openzeppelin/"
+      ],
+      "optimizer": { "enabled": true, "runs": 200 },
+      "metadata": { "bytecodeHash": "ipfs" },
+      "compilationTarget": {
+        "contracts/points/PointsToken.sol": "PointsToken"
+      },
+      "evmVersion": "paris",
+      "libraries": {},
+      "viaIR": true
+    },
+    "sources": {
+      "contracts/points/PointsToken.sol": {
+        "keccak256": "0xa1af45dc911476f4954122642c35ea9c5d66bcc815dfa88318e3a568fbe89d97",
+        "urls": [
+          "bzz-raw://dba4a185b6d5a5cbe00a78f2b81ec6b70e49ecddc241aa9cfdf6818697ac2992",
+          "dweb:/ipfs/QmfYPkqv5dc8bqUVj3CZk4PrkMnnvJKdvHexWfCKGz4JAh"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 9
+}

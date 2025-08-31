@@ -15,6 +15,16 @@ import factoryAbi from '@/lib/contracts/SymbioticLiskETHVaultProxyFactory.sol/Li
 import vaultAbiJson from '@/lib/contracts/SymbioticLiskEthVaultProxy.sol/SymbioticLiskETHVaultProxy.json';
 import { decodeEventLog, erc20Abi } from 'viem';
 import { ROUTER_ADDRESS } from '@/config/constants/addresses';
+import pointsAbiJson from '@/lib/contracts/PointsToken.sol/PointsToken.json';
+import adminAbiJson from '@/lib/contracts/AdminMinterLeaderboard.sol/AdminMinterLeaderboard.json';
+import {
+  POINTS_TOKEN_ADDRESS as ENV_POINTS,
+  ADMIN_LEADERBOARD_ADDRESS as ENV_ADMIN,
+} from '@/config/constants/envs';
+import {
+  POINTS_TOKEN_ADDRESS as CONST_POINTS,
+  ADMIN_LEADERBOARD_ADDRESS as CONST_ADMIN,
+} from '@/config/constants/addresses';
 
 const BodySchema = z.object({
   owner: z
@@ -152,6 +162,31 @@ export async function POST(req: NextRequest) {
       collaborators: [],
       address: vaultAddress,
     });
+
+    try {
+      const pointsAddress = (ENV_POINTS || CONST_POINTS) as `0x${string}`;
+      const adminAddress = (ENV_ADMIN || CONST_ADMIN) as `0x${string}`;
+      if (pointsAddress && adminAddress) {
+        const pointsAbi = (pointsAbiJson as { abi: unknown })
+          .abi as readonly unknown[];
+        const adminAbi = (adminAbiJson as { abi: unknown })
+          .abi as readonly unknown[];
+        const pointsDecimals = (await publicClient.readContract({
+          address: pointsAddress,
+          abi: pointsAbi,
+          functionName: 'decimals',
+        })) as number;
+        const bonus = BigInt(1000) * BigInt(10) ** BigInt(pointsDecimals);
+        const awardTx = await walletClient.writeContract({
+          account: executorAccount,
+          address: adminAddress,
+          abi: adminAbi,
+          functionName: 'award',
+          args: [data.owner as `0x${string}`, bonus],
+        });
+        await publicClient.waitForTransactionReceipt({ hash: awardTx });
+      }
+    } catch {}
 
     return NextResponse.json(
       { ok: true, vault: vaultAddress, txHash },

@@ -2,8 +2,8 @@
 pragma solidity ^0.8.24;
 
 contract PointsToken {
-    string public constant name = "Hunt Points";
-    string public constant symbol = "HPOINT";
+    string public constant name = "Frog Points";
+    string public constant symbol = "POINT";
     uint8  public constant decimals = 0;
 
     address public minter; // AdminMinterLeaderboard contract
