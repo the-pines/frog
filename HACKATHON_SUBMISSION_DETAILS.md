@@ -48,6 +48,6 @@ We have integrated ENS for showing points which you can find [here](./src/compon
 
 ## V0 by Vercel
 
-We're huge fans of Vercel and weren't going to use anything else! We used V0 to design the frontend components (although we wrote the logic ourselves). We're particularly happy with how the debit card component turned out. We also deployed both the Frog Pay and Zarpado Shop apps to our domain using Vercel.
+We're huge fans of Vercel and weren't going to use anything else! We used V0 to design the frontend components (although we wrote the logic ourselves). We're particularly happy with how the debit card component turned out. We also deployed both the Frog Pay and Zarpado Shop apps to our domain using Vercel. You can find Frog Pay [here](https://www.usefrogpay.com/) and Zarpado Shop [here](https://shop.usemonadpay.com/).
 
 ![vaults](public/card.png)
