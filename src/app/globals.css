@@ -100,6 +100,15 @@
   );
 }
 
+/* Lighter variant for select cards */
+.frog-glass--light {
+  background-color: color-mix(
+    in oklab,
+    var(--color-frog-glass) 58%,
+    transparent
+  );
+}
+
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -205,6 +214,20 @@
     );
   background-size: 220% 220%, 180% 180%, 200% 200%, 100% 100%;
   background-position: 0% 0%, 100% 0%, 0% 100%, 50% 50%;
+}
+
+/* Animated aurora for compact badges/buttons */
+@keyframes badge-aurora-pan {
+  0% {
+    background-position: 0% 0%, 100% 0%, 0% 100%, 50% 50%;
+  }
+  100% {
+    background-position: 100% 100%, 100% 0%, 0% 100%, 50% 50%;
+  }
+}
+.points-aurora {
+  animation: badge-aurora-pan 12s ease-in-out infinite alternate;
+  will-change: background-position;
 }
 
 @property --wand-x {

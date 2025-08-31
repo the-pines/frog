@@ -150,25 +150,24 @@ const PointsPage: React.FC = () => {
   const yourRank = youIndex >= 0 ? youIndex + 1 : null;
 
   return (
-    <div className="relative mx-auto w-full max-w-[393px] px-4 pt-16 pb-12 flex flex-col gap-8">
-      {/* Top highlight and bottom vignette for contrast */}
-      <div className="pointer-events-none absolute -top-6 left-0 right-0 h-36 bg-gradient-to-b from-white/25 via-white/0 to-transparent blur-xl"></div>
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black/25 via-black/0 to-transparent"></div>
-      {/* Subtle grain overlay */}
-      <div className="pointer-events-none absolute inset-0 opacity-10 mix-blend-overlay [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.08)_0,rgba(255,255,255,0.08)_1px,transparent_1px,transparent_2px),repeating-linear-gradient(90deg,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_1px,transparent_1px,transparent_2px)]"></div>
-
-      {/* Header card with hierarchy */}
-      <div className="relative overflow-hidden rounded-3xl backdrop-blur-md bg-[rgba(0,0,0,0.28)] ring-1 ring-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.22)] px-6 py-8 text-center">
-        <div className="text-[11px] uppercase tracking-wide text-white/70 mb-2">
-          your points
+    <div className="relative mx-auto w-full max-w-[393px] px-4 pt-8 pb-12 flex flex-col gap-5">
+      <div className="frog-glass frog-glass--light supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 px-6 py-8 text-center">
+        <div className="text-[11px] uppercase tracking-wide text-frog-muted mb-2">
+          My points
         </div>
-        <div className="text-7xl leading-none font-extrabold tracking-tight text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)]">
+        <div
+          className="text-7xl leading-none font-extrabold tracking-tight bg-clip-text text-transparent font-display"
+          style={{
+            backgroundImage:
+              'linear-gradient(120deg, var(--color-grad-1), var(--color-grad-2), var(--color-grad-3))',
+          }}
+        >
           {loading ? '…' : formatted}
         </div>
-        <div className="text-sm text-white/70 mt-2">points</div>
+        <div className="text-sm text-frog-foreground/80 mt-2">points</div>
         {yourRank ? (
-          <div className="mx-auto mt-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-xs text-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
-            You’re #{yourRank}
+          <div className="mx-auto mt-3 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-frog-foreground/90">
+            Rank #{yourRank}
           </div>
         ) : null}
       </div>
@@ -231,76 +230,96 @@ const PointsPage: React.FC = () => {
         })()}
       </div>
 
-      <div className="overflow-hidden rounded-3xl backdrop-blur-md bg-[rgba(0,0,0,0.28)] ring-1 ring-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.22)]">
-        <div className="flex flex-col mt-1">
-          {data?.leaderboard?.length ? (
-            data.leaderboard.slice(3, 10).map((item, idx) => {
-              const rank = idx + 4;
-              const isYou =
-                (userAddress ?? '').toLowerCase() ===
-                item.address.toLowerCase();
-              const emoji = getEmojiForRank(rank);
-              return (
-                <div
-                  key={item.address}
-                  className={`grid grid-cols-[24px_32px_1fr_auto] items-center gap-3 px-4 py-2 odd:bg-white/5 ${
-                    isYou ? 'border-l-2 border-emerald-400/80' : ''
-                  }`}
-                >
-                  <div className="text-white/60 text-right tabular-nums">
-                    {rank}
-                  </div>
-                  <div className="h-8 w-8 rounded-full ring-2 ring-white/25 ring-offset-2 ring-offset-black/40 flex items-center justify-center text-lg">
-                    {emoji || '👤'}
-                  </div>
-                  <div
-                    className={`text-white/90 ${isYou ? 'font-semibold' : ''}`}
-                  >
-                    {labelFor(item.address as Address)}
-                    {isYou ? (
-                      <span className="ml-2 align-middle inline-flex items-center rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[11px] text-white/85 shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
-                        you
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="text-right font-mono tabular-nums text-white/90">
-                    {formatUnits(BigInt(item.points), data?.decimals ?? 18)}
-                    <span className="ml-1 text-white/60">points</span>
-                  </div>
+      {loading ? (
+        <section
+          role="status"
+          aria-busy="true"
+          className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4"
+        >
+          <div className="mb-3">
+            <div className="h-5 w-28 skeleton" />
+          </div>
+          <ul className="space-y-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <li key={i} className="rounded-xl p-2">
+                <div className="grid grid-cols-[24px_32px_1fr_auto] items-center gap-3">
+                  <div className="h-4 w-6 skeleton" />
+                  <div className="h-8 w-8 rounded-full skeleton" />
+                  <div className="h-4 w-40 skeleton" />
+                  <div className="h-4 w-16 skeleton" />
                 </div>
-              );
-            })
-          ) : (
-            <div className="py-6 text-[#C8D1DA]">No leaderboard data yet.</div>
-          )}
-        </div>
-
-        {youIndex < 0 ? (
-          <div className="px-4 pb-3 text-xs text-white/70">
-            you’re outside the top 10 — keep going!
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : (
+        <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4 overflow-hidden">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-sm font-medium text-frog-muted">Leaderboard</h2>
           </div>
-        ) : null}
-        {youIndex >= 10 ? (
-          <div className="px-4 pb-4">
-            <div className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-xs text-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
-              Your current rank: #{youIndex + 1}
+          <ul className="space-y-1">
+            {data?.leaderboard?.length ? (
+              data.leaderboard.slice(3, 10).map((item, idx) => {
+                const rank = idx + 4;
+                const isYou =
+                  (userAddress ?? '').toLowerCase() ===
+                  item.address.toLowerCase();
+                const emoji = getEmojiForRank(rank);
+                return (
+                  <li
+                    key={item.address}
+                    className="rounded-xl hover:bg-white/5"
+                  >
+                    <div
+                      className={`grid grid-cols-[24px_32px_1fr_auto] items-center gap-3 p-2 ${
+                        isYou ? 'border-l-2 border-emerald-400/80 pl-3' : ''
+                      }`}
+                    >
+                      <div className="text-frog-muted text-right tabular-nums">
+                        {rank}
+                      </div>
+                      <div className="h-8 w-8 rounded-full ring-2 ring-white/10 flex items-center justify-center text-lg">
+                        {emoji || '👤'}
+                      </div>
+                      <div
+                        className={`text-frog-foreground ${
+                          isYou ? 'font-semibold' : ''
+                        }`}
+                      >
+                        {labelFor(item.address as Address)}
+                        {isYou ? (
+                          <span className="ml-2 align-middle inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-frog-foreground/85">
+                            you
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="text-right font-mono tabular-nums text-frog-foreground">
+                        {formatUnits(BigInt(item.points), data?.decimals ?? 18)}
+                        <span className="ml-1 text-frog-muted">points</span>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })
+            ) : (
+              <li className="py-2 text-frog-muted">No leaderboard data yet.</li>
+            )}
+          </ul>
+
+          {youIndex < 0 ? (
+            <div className="px-2 pt-2 text-xs text-frog-muted">
+              you’re outside the top 10 — keep going!
             </div>
-          </div>
-        ) : null}
-      </div>
-
-      <div className="rounded-3xl backdrop-blur-md bg-[rgba(255,255,255,0.18)] ring-1 ring-black/10 shadow-[0_12px_40px_rgba(0,0,0,0.18)]">
-        <div className="px-5 pt-4 text-sm text-[color:var(--foreground)]/90">
-          Earn more points!
-        </div>
-        <ul className="px-7 pb-5 list-disc text-[color:var(--foreground)]/85 space-y-1">
-          <li>Make purchases with your card</li>
-          <li>Create a savings vault</li>
-          <li>Share your savings vault</li>
-          <li>Invite friends to try Frog</li>
-          <li>Keep an onchain activity streak</li>
-        </ul>
-      </div>
+          ) : null}
+          {youIndex >= 10 ? (
+            <div className="px-2 pt-2">
+              <div className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-frog-foreground/90">
+                Your current rank: #{youIndex + 1}
+              </div>
+            </div>
+          ) : null}
+        </section>
+      )}
     </div>
   );
 };

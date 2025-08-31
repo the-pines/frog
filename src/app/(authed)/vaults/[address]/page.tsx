@@ -88,10 +88,12 @@ export default function VaultDetailPage() {
   if (isHidden) {
     return (
       <div className="px-4">
-        <div className="mt-4 text-sm opacity-70">This vault is hidden.</div>
+        <div className="mt-4 text-sm text-frog-muted">
+          This vault is hidden.
+        </div>
         <Link
           href="/vaults"
-          className="inline-block mt-3 rounded-full border border-black/[.08] dark:border-white/[.145] px-4 h-10 hover:bg-black/[.02] dark:hover:bg-white/[.04]"
+          className="inline-block mt-3 rounded-full border border-white/10 px-4 h-10 hover:bg-white/5"
         >
           Back to vaults
         </Link>
@@ -104,30 +106,28 @@ export default function VaultDetailPage() {
       <div className="sticky top-0 z-10 -mx-4 px-4 py-2 bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Link
           href="/vaults"
-          className="inline-flex items-center gap-2 rounded-full border border-black/[.08] dark:border-white/[.145] px-3 h-9 hover:bg-black/[.02] dark:hover:bg-white/[.04] text-sm"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 h-9 hover:bg-white/5 text-sm"
         >
           <span aria-hidden>←</span> Back
         </Link>
       </div>
       {loading && (
         <div className="space-y-4 animate-pulse">
-          <div>
-            <div className="h-3 w-12 bg-black/10 dark:bg-white/10 rounded mb-2" />
-            <div className="h-6 w-40 bg-black/10 dark:bg-white/10 rounded" />
-            <div className="mt-2 h-4 w-full bg-black/10 dark:bg-white/10 rounded" />
+          <div className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4">
+            <div className="h-3 w-12 skeleton rounded mb-2" />
+            <div className="h-6 w-40 skeleton rounded" />
+            <div className="mt-2 h-4 w-full skeleton rounded" />
           </div>
-          <div className="grid grid-cols-2 gap-y-2 text-sm">
-            <div className="h-4 w-16 bg-black/10 dark:bg-white/10 rounded" />
-            <div className="h-4 w-32 bg-black/10 dark:bg-white/10 rounded" />
-            <div className="h-4 w-16 bg-black/10 dark:bg-white/10 rounded" />
-            <div className="h-4 w-32 bg-black/10 dark:bg-white/10 rounded" />
+          <div className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4 grid grid-cols-2 gap-y-2 text-sm">
+            <div className="h-4 w-16 skeleton rounded" />
+            <div className="h-4 w-32 skeleton rounded" />
+            <div className="h-4 w-16 skeleton rounded" />
+            <div className="h-4 w-32 skeleton rounded" />
           </div>
-          <div className="h-24 bg-black/10 dark:bg-white/10 rounded" />
+          <div className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 h-24" />
         </div>
       )}
-      {!loading && error && (
-        <div className="text-sm text-red-600 dark:text-red-400">{error}</div>
-      )}
+      {!loading && error && <div className="text-sm text-red-500">{error}</div>}
       {!loading && info && (
         <div className="space-y-4">
           {(() => {
@@ -139,24 +139,38 @@ export default function VaultDetailPage() {
                 : 0;
             const overGoal = total > goal;
             return (
-              <div className="relative flex flex-col items-center justify-center gap-2 mt-2">
-                <ProgressCircle size={120} percent={pct} label="Progress" />
-                <div className="text-sm font-semibold">{Math.round(pct)}%</div>
-                {overGoal && (
-                  <span className="absolute right-2 top-2 text-xl" aria-hidden>
-                    🎉
-                  </span>
-                )}
-              </div>
+              <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4">
+                <div className="relative flex flex-col items-center justify-center gap-2 mt-2">
+                  <ProgressCircle
+                    size={156}
+                    stroke={16}
+                    percent={pct}
+                    label="Progress"
+                  />
+                  <div className="text-sm font-semibold text-frog-foreground">
+                    {Math.round(pct)}%
+                  </div>
+                  {overGoal && (
+                    <span
+                      className="absolute right-2 top-2 text-xl"
+                      aria-hidden
+                    >
+                      🎉
+                    </span>
+                  )}
+                </div>
+              </section>
             );
           })()}
-          <div>
-            <div className="text-xs opacity-70">Vault</div>
-            <div className="font-semibold text-lg">{info.name || 'Vault'}</div>
-            <div className="mt-2 text-sm break-all">
+          <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4">
+            <div className="text-xs text-frog-muted">Vault</div>
+            <div className="font-semibold text-lg text-frog-foreground">
+              {info.name || 'Vault'}
+            </div>
+            <div className="mt-2 text-sm break-all text-frog-foreground/90">
               {id}
               <button
-                className="ml-2 inline-flex items-center rounded-full border border-black/[.08] dark:border-white/[.145] px-2 h-6 hover:bg-black/[.02] dark:hover:bg-white/[.04] text-xs"
+                className="ml-2 inline-flex items-center rounded-full border border-white/10 px-2 h-6 hover:bg-white/5 text-xs"
                 onClick={async () => {
                   try {
                     await navigator.clipboard.writeText(id);
@@ -166,54 +180,56 @@ export default function VaultDetailPage() {
                 Copy
               </button>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-y-1 text-sm">
-            <div className="opacity-70">Goal</div>
-            <div>
-              {wstWeiToUsdString(info.goalWstETH || '0', info.token.decimals)}
+            <div className="mt-3 grid grid-cols-2 gap-y-1 text-sm">
+              <div className="text-frog-muted">Goal</div>
+              <div className="text-frog-foreground">
+                {wstWeiToUsdString(info.goalWstETH || '0', info.token.decimals)}
+              </div>
+              <div className="text-frog-muted">Total</div>
+              <div className="text-frog-foreground">
+                {wstWeiToUsdString(
+                  info.totalWstETHAssets || '0',
+                  info.token.decimals
+                )}
+              </div>
             </div>
-            <div className="opacity-70">Total</div>
-            <div>
-              {wstWeiToUsdString(
-                info.totalWstETHAssets || '0',
-                info.token.decimals
-              )}
-            </div>
-          </div>
+          </section>
 
           {info.user && (
-            <div className="rounded-xl border border-black/[.08] dark:border-white/[.145] p-4">
-              <div className="font-semibold mb-2">My Profit</div>
+            <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4">
+              <div className="font-semibold mb-2 text-frog-foreground">
+                My Profit
+              </div>
               <div className="grid grid-cols-2 gap-y-1 text-sm">
-                <div className="opacity-70">Total assets</div>
-                <div>
+                <div className="text-frog-muted">Total assets</div>
+                <div className="text-frog-foreground">
                   {wstWeiToUsdString(
                     info.user.assets || '0',
                     info.token.decimals
                   )}
                 </div>
-                <div className="opacity-70">Profit</div>
-                <div>
+                <div className="text-frog-muted">Profit</div>
+                <div className="text-frog-foreground">
                   {wstWeiToUsdString(
                     info.user.profit || '0',
                     info.token.decimals
                   )}
                 </div>
               </div>
-            </div>
+            </section>
           )}
 
-          <div className="rounded-xl border border-black/[.08] dark:border-white/[.145] p-4 space-y-3">
-            <div className="font-semibold">Deposit</div>
+          <section className="frog-glass supports-[backdrop-filter]:backdrop-blur-xl rounded-2xl border border-white/10 p-4 space-y-3">
+            <div className="font-semibold text-frog-foreground">Deposit</div>
             <div className="flex gap-2">
               <input
-                className="rounded-md border px-3 h-10 border-black/[.08] dark:border-white/[.145] min-w-[160px]"
+                className="rounded-md border border-white/10 bg-transparent px-3 h-10 min-w-[160px]"
                 placeholder={`Amount (USDC)`}
                 value={depositUsdc}
                 onChange={(e) => setDepositUsdc(e.target.value)}
               />
               <button
-                className="rounded-full border border-black/[.08] dark:border-white/[.145] px-4 h-10 hover:bg-black/[.02] dark:hover:bg-white/[.04] inline-flex items-center gap-2 disabled:opacity-50"
+                className="rounded-full border border-white/10 px-4 h-10 hover:bg-white/5 inline-flex items-center gap-2 disabled:opacity-50"
                 disabled={submitting}
                 onClick={async () => {
                   try {
@@ -311,7 +327,7 @@ export default function VaultDetailPage() {
             <div className="relative h-0">
               <ConfettiBurst burstKey={burstKey} />
             </div>
-          </div>
+          </section>
         </div>
       )}
     </div>

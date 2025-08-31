@@ -52,16 +52,16 @@ const PointsBadge: React.FC = () => {
     <Link
       href="/points"
       aria-label="Points"
-      className="inline-flex h-10 items-center gap-2 rounded-2xl px-3"
-      style={{
-        background:
-          'linear-gradient(135deg, rgba(5,43,53,0.9) 0%, rgba(14,53,92,0.9) 100%)',
-        boxShadow: 'inset 0 0 0 1px rgba(87,158,168,0.25)',
-      }}
+      className="relative inline-flex h-10 items-center gap-2 rounded-2xl px-3 text-white overflow-hidden border border-white/10"
     >
-      <span className="text-white text-sm">{loading ? '…' : display}</span>
-      <span className="text-white text-sm font-medium">points</span>
-      <span className="text-white text-base">✨</span>
+      <span
+        className="pointer-events-none absolute inset-0 card-aurora-cobalt aurora"
+        aria-hidden
+      />
+      <span className="pointer-events-none shimmer-sweep" aria-hidden />
+      <span className="relative z-10 text-sm">{loading ? '…' : display}</span>
+      <span className="relative z-10 text-sm font-medium">points</span>
+      <span className="relative z-10 text-base">✨</span>
     </Link>
   );
 };

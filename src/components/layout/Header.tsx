@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { UserIcon } from '@heroicons/react/24/outline';
-// import PointsBadge from '@/components/ui/PointsBadge';
+import PointsBadge from '@/components/ui/PointsBadge';
 
 export default function Header() {
   return (
@@ -40,14 +40,7 @@ export default function Header() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <Link
-              href="/points"
-              aria-label="Points"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10"
-            >
-              <span className="block h-5 w-5 rounded-md bg-white/20" />
-              {/* <PointsBadge /> */}
-            </Link>
+            <PointsBadge />
 
             <Link
               href="/settings"

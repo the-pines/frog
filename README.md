@@ -6,11 +6,13 @@ This README.md is the technical stuff. Read this to learn exactly how Frog Pay w
 
 If you're a judge and you'd like to learn more about exactly how we qualify for the bounties we're applying for, please read the [hackathon submission details](./HACKATHON_SUBMISSION_DETAILS.md).
 
-[Pitch deck]()
+![home](public/homescreen.png)
+
+[Pitch deck](https://www.canva.com/design/DAGxmEsjdnU/pZv82JADsAC_aJHZHu0Hdw/view?utm_content=DAGxmEsjdnU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3abbfeb095)
 
 [Demo]()
 
-[Go to market]()
+[Go to market](./GO_TO_MARKET.md)
 
 [Hackathon submission details](./HACKATHON_SUBMISSION_DETAILS.md)
 

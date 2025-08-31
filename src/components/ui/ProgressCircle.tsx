@@ -38,9 +38,9 @@ export const ProgressCircle: React.FC<ProgressCircleProps> = ({
       <svg width={size} height={size} className="block">
         <defs>
           <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#836EF9" />
-            <stop offset="50%" stopColor="#67DE8F" />
-            <stop offset="100%" stopColor="#FF66C4" />
+            <stop offset="0%" stopColor="var(--color-grad-1)" />
+            <stop offset="50%" stopColor="var(--color-grad-2)" />
+            <stop offset="100%" stopColor="var(--color-grad-3)" />
           </linearGradient>
         </defs>
         <circle
